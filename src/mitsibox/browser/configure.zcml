@@ -134,6 +134,15 @@
         allowed_interface=".interfaces.IManageDisplayBox"
         />
 
+    <browser:page
+        name="reception-tournee"
+        for="*"
+        class=".manage_collections.ManageCollections"
+        template="templates/control_center/reception_round.pt"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageCollections"
+        />
+
 
 <!-- MANAGE LABS -->
     <browser:page
@@ -271,6 +280,7 @@
         allowed_interface=".interfaces.IManageDrivers"
         />
 
+
 <!-- MANAGE ROUNDS -->
     <browser:page
         name="ajouter-une-tournee"
@@ -321,6 +331,7 @@
         allowed_interface=".interfaces.IManageRounds"
         />
 
+
 <!-- MANAGE COLLECTIONS -->
     <browser:page
         name="listing-des-collections"
@@ -339,10 +350,10 @@
         allowed_interface=".interfaces.IManageCollections"
         />
     <browser:page
-        name="insertCollection"
+        name="insertCollectionByDriver"
         for="*"
         class=".manage_collections.ManageCollections"
-        attribute="insertCollection"
+        attribute="insertCollectionByDriver"
         permission="zope2.View"
         allowed_interface=".interfaces.IManageCollections"
         />
