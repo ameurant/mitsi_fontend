@@ -20,7 +20,7 @@ class ManageRounds(ConnexionDb):
         """
         Récupère les infos de toutes les tournées
         """
-        tablesRounds = self.getLabDbAccess('mitsibox_rounds')
+        tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
         recs = tablesRounds.find().execute()
         myRounds = recs.fetch_all()
         return myRounds
@@ -29,7 +29,7 @@ class ManageRounds(ConnexionDb):
         """
         Récupère les infos d'une tournée selon son _id
         """
-        tablesRounds = self.getLabDbAccess('mitsibox_rounds')
+        tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
         recs = tablesRounds.find("_id =='%s'"%(idRound,)).execute()
         myRound = recs.fetch_one()
         return myRound
@@ -38,7 +38,6 @@ class ManageRounds(ConnexionDb):
         """
         Récupère le nom dde la tournée à la quelle appartient une box
         """
-        print "Box %s" % (idBox,)
         session = self.getConnexion()
         db = session.get_schema('mitsi_chuhautesenne')
         request = db.session.sql("""select
@@ -48,15 +47,12 @@ class ManageRounds(ConnexionDb):
                                         mitsi_chuhautesenne.mitsibox_rounds
                                     where
                                         "%s" member of (doc->>'$.roundMitsiboxList')""" % (idBox,)).execute()
-        result = request.fetch_one();
+        result = request.fetch_one()
         if (result is not None):
             myRound = {}
             (myRound['idRound'], myRound['roundName']) = result
-            print "Rounds for box %s OK" % (idBox,)
-            print "my round %s" % (myRound,)
             return myRound
         else:
-            print "Rounds for box %s KO" % (idBox,)
             return None
 
 
@@ -76,7 +72,7 @@ class ManageRounds(ConnexionDb):
         """
         insertion d'une nouvelle tournée
         """
-        tableRounds = self.getLabDbAccess('mitsibox_rounds')
+        tableRounds = self.getLabDbAccessCollection('mitsibox_rounds')
         fields = self.request.form
 
         newRound = {}
@@ -101,7 +97,7 @@ class ManageRounds(ConnexionDb):
         """
         modification d'une tournée
         """
-        tablesRounds = self.getLabDbAccess('mitsibox_rounds')
+        tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
         fields = self.request.form
         idRound = fields.get('idRound', None) 
 
