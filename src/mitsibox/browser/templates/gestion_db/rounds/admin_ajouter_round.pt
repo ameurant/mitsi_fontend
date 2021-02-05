@@ -72,8 +72,8 @@
                 <select name="roundDriverId"
                         id="driver-id"
                         required>
+                    <option>...</option>
                     <tal:boucle tal:repeat="myDriver allDrivers">
-                        <option>...</option>
                         <option tal:attributes="value myDriver/_id">
                             <span tal:content="myDriver/firstName" />
                             <span tal:content="myDriver/lastName" />
