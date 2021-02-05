@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="fr"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="box">
+
+<body onLoad="document.insertBoxPrelevement.box-qrcode.focus();">
+
+<metal:block fill-slot="top_slot"
+           tal:define="dummy python:request.set('disable_border',1)" />
+
+<metal:main fill-slot="content-core"
+            tal:define="commonView context/@@manageCommon;
+                        roundsView context/@@manageRounds;
+                        boxesView context/@@manageBox;
+                        labsView context/@@manageLabs;
+                        employeLab commonView/getUserAuthenticated;
+                        allLabs labsView/getListingLabs;
+                        allRounds roundsView/getAllRounds">
+
+    <section class="formulaire">
+        <h2>
+            <i class="fas fa-ellipsis-v"></i>
+            Réceptionner une tournée
+        </h2>
+        <br />
+        <span class="discret"> 
+            ==> <span tal:content="user" />
+        </span>
+        <form action="insertCollectionByLabo"
+              method="post">
+            <div class="form-input">
+                <label for="round-id">
+                    Séléctionner la tournée :
+                </label>
+                <select name="roundId"
+                        id="round-id"
+                        required>
+                    <option>...</option>
+                    <tal:boucle tal:repeat="myRound allRounds">
+                        <option tal:attributes="value myRound/_id">
+                            <span tal:content="myRound/roundName" />
+                        </option>
+                    </tal:boucle>
+                </select>
+            </div>
+            <div class="form-input">
+                <label for="total-saclots">
+                    Nombre de colis récupérés :
+                </label>
+                <input type="numeric"
+                       name="totalSaclots"
+                       id="total-saclots"
+                       value="0" />
+            </div>
+            <div class="form-input">
+                <label for="commentaire">
+                    Commentaire :
+                </label>
+                <textarea name="commentaire"
+                          id="commentaire"
+                          placaholder="Un commentaire">
+                </textarea>
+            </div>
+            <div class="formControls" align="center">
+                <input type="hidden"
+                       name="employeLab"
+                       tal:attributes="value employeLab" />
+                
+                <input type="submit"
+                       name="submit"
+                       value="Enregister" />
+            </div>
+        </form>
+    </section>
+</metal:main>
+</body>
+</html>
