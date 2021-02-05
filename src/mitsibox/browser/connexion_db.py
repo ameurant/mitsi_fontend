@@ -26,11 +26,28 @@ class ConnexionDb(BrowserView):
 
         return session
 
-    def getLabDbAccess(self, tableName):
+    def getLabDbAccess(self):
         """
-        recupère les tables d'un laboratoire
+        recupère la db d'un schema de laboratoire
         """
         session = self.getConnexion()
         db = session.get_schema(LABNAME)
-        tablesMitsibox = db.get_collection(tableName)
-        return tablesMitsibox
+        return db
+
+    def getLabDbAccessCollection(self, collectionName):
+        """
+        recupère les collections d'un schema de laboratoire
+        """
+        session = self.getConnexion()
+        db = session.get_schema(LABNAME)
+        collectionMitsibox = db.get_collection(collectionName)
+        return collectionMitsibox
+
+    def getLabDbAccessTable(self, tableName):
+        """
+        recupère la table d'un schema de laboratoire
+        """
+        session = self.getConnexion()
+        db = session.get_schema(LABNAME)
+        tableMitsibox = db.get_table(tableName)
+        return tableMitsibox
