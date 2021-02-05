@@ -12,10 +12,10 @@
            tal:define="dummy python:request.set('disable_border',1)" />
 
 <metal:main fill-slot="content-core"
-            tal:define="idBox string:00005f0d88fe0000000000000002;
+            tal:define="idBox string:00005ecb95df0000000000000010;
                         commonView context/@@manageCommon;
                         boxesView context/@@manageBox;
-                        idDriver commonView/getUserAuthenticated;
+                        idDriver commonView/getUserAuthenticated; 
                         idRound string:00005f0d88fe0000000000000018;
                         myBox python:boxesView.getOneBoxById(idBox)">
 
@@ -31,7 +31,7 @@
         <span class="discret"> 
             ==> <span tal:content="user" />
         </span>
-        <form action="insertCollection"
+        <form action="insertCollectionByDriver"
               method="post">
             <div class="form-input">
                 Info de la boite :
@@ -62,7 +62,7 @@
             </div>
             <div class="formControls" align="center">
                 <input type="hidden"
-                       name="boxId"
+                       name="idBox"
                        tal:attributes="value idBox" />
                 <input type="hidden"
                        name="idDriver"
