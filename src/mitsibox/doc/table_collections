@@ -1,67 +1,209 @@
-mitsibox_collect_box_history
-+-----------------------+---------------+------+-----+---------+----------------+
-| Field                 | Type          | Null | Key | Default | Extra          |
-+-----------------------+---------------+------+-----+---------+----------------+
-| id                    | int unsigned  | NO   | PRI | NULL    | auto_increment |
-| collect_history_id    | int unsigned  | YES  |     | NULL    |                |
-| box_id                | varbinary(32) | YES  |     | NULL    |                |
-| collect_box_timestamp | timestamp     | YES  |     | NULL    |                |
-| collect_box_comment   | varchar(255)  | YES  |     | NULL    |                |
-+-----------------------+---------------+------+-----+---------+----------------+
-
-mitsibox_collect_history
-+-----------------+---------------+------+-----+---------+----------------+
-| Field           | Type          | Null | Key | Default | Extra          |
-+-----------------+---------------+------+-----+---------+----------------+
-| id              | int unsigned  | NO   | PRI | NULL    | auto_increment |
-| round_id        | varbinary(32) | YES  |     | NULL    |                |
-| driver_id       | varbinary(32) | YES  |     | NULL    |                |
-| box_id          | varbinary(32) | YES  |     | NULL    |                |
-| start_date      | date          | YES  |     | NULL    |                |
-| start_time      | time          | YES  |     | NULL    |                |
-| end_time        | time          | YES  |     | NULL    |                |
-| status          | varchar(15)   | YES  |     | NULL    |                |
-| samples_total   | int           | YES  |     | NULL    |                |
-| collect_comment | varchar(255)  | YES  |     | NULL    |                |
-+-----------------+---------------+------+-----+---------+----------------+
 
 
 
-Questions pour fred
-    mitsibox_collect_history.start_date
-    mitsibox_collect_history.start_time
-    mitsibox_collect_history.end_time
+mitsibox_collect_history (table)
+=========================
++----+------------------------------+----------------+------------+----------+--------+-------------+--------------+--------------------+
+| id | round_id                     | driver_id      | start_date | end_date | status | employee_id | labo_comment | samples_total_labo |
++----+------------------------------+----------------+------------+----------+--------+-------------+--------------+--------------------+
+|  5 | 00005f0d88fe0000000000000018 | steve          | NULL       | NULL     | ACTIVE | NULL        | NULL         |                  0 |
++----+------------------------------+----------------+------------+----------+--------+-------------+--------------+--------------------+
+                                                                               ACTIVE
+                                                                               DONE
 
-    mitsibox_collect_box_history.collect_box_timestamp
-    mitsibox_collect_box_history.collect_box_comment
+mitsibox_collect_box_history (table)
+============================
++----+--------------------+------------------------------+-----------------------+---------------------+---------------+
+| id | collect_history_id | box_id                       | collect_box_timestamp | collect_box_comment | samples_total |
++----+--------------------+------------------------------+-----------------------+---------------------+---------------+
+|  1 |                 12 | 00005ecb95df000000000000000c | 2021-02-04 11:37:23   | NULL                |             0 |
+|  1 |                 12 | 00005ecb95df000000000000000b | 2021-02-04 11:48:00   | NULL                |             2 |
+|  1 |                 12 | 00005ecb95df000000000000000d | 2021-02-04 12:20:13   | NULL                |             4 |
+|  1 |                 12 | 00005ecb95df000000000000000f | 2021-02-04 13:37:51   | NULL                |             5 |
++----+--------------------+------------------------------+-----------------------+---------------------+---------------+
 
-Dans quel ordre remplit-on les tables ?
-        mitsibox_collect_history à chaque prélèvement du driver dans une boite
-        mitsibox_collect_box_history à chaque ajout d'une ligne dans mitsibox_collect_history
+mitsibox_sample_events 
+======================
++----+---------------------+------------------------------+------------------------------+---------+
+| id | time_stamp          | sample_id                    | box_id                       | status  |
++----+---------------------+------------------------------+------------------------------+---------+
+| 25 | 2021-02-04 11:56:43 | 00006011b7d00000000000000004 | 00005ecb95df000000000000000c | INBOX   |
++----+---------------------+------------------------------+------------------------------+---------+
+                                                                                           INBOX
+                                                                                           TRANSIT
+                                                                                           LABO
+
+
+mitsibox_sample (table)
+===============
++------------------------------+-----------+------------------------------+--------+---------------------+
+| _id                          | tag       | box_id                       | status | last_action         |
++------------------------------+-----------+------------------------------+--------+---------------------+
+| 00006011b7d00000000000000004 | 340774124 | 00005ecb95df000000000000000c | INBOX  | 2021-02-04 11:56:43 |
++------------------------------+-----------+------------------------------+--------+---------------------+
+                                                                            INBOX
+                                                                            TRANSIT
+                                                                            LABO
 
 
 
-Ce sont des tables
+
+Regarde si j'ai oublié qqch:
+14 h 01
+Réception Labo
+===============
+"scannange" du saclo
+---------------------
+-->
+    recherche du sample_id via son tag rfid:
+    db.mitsibox_samples.find("tag = '340774124'")
+{
+    "_id": "00006011b7d00000000000000004",
+    "tag": "340774124",
+    "box_id": "00005ecb95df000000000000000c",
+    "status": "INBOX",
+    "last_action": "2021-02-04 11:56:43"
+}
+
+--> Si status pas TRANSIT ??
+Trouver le round_id pour changer le status dans mitsibox_collect_history (de ACTIVE à DONE)
+select ch.id, round_id from mitsibox_collect_box_history as cbh join mitsibox_collect_history as ch on ch.id = cbh.collect_history_id where box_id = '00005f0d88fe0000000000000002' and status='ACTIVE';
++----+------------------------------+
+| id | round_id                     |
++----+------------------------------+
+| 12 | 00005f0d88fe0000000000000018 |
++----+------------------------------+
+update mitsibox_collect_history where id = '12' status ACTIVE to-->  DONE;
+
+
+---> via la machine on ne saura pas l'employee_id
+
+Recherche dans mitsibox_sample_events du denier record où sample_id et status TRANSIT et ajouter une ligne
+avec status LABO
+
+select * from mitsibox_sample_events where sample_id='00005f0d88fe0000000000000013' and status='TRANSIT' order by time_stamp desc limit 1;
++----+---------------------+------------------------------+------------------------------+---------+
+| id | time_stamp          | sample_id                    | box_id                       | status  |
++----+---------------------+------------------------------+------------------------------+---------+
+|  8 | 2020-12-05 00:27:07 | 00005f0d88fe0000000000000013 | 00005ecb95df000000000000000c | TRANSIT |
++----+---------------------+------------------------------+------------------------------+---------+
+et changer le status de TRANSIT à LABO aussi dans
+db.mitsibox_samples.find("_id = '00006011b7d00000000000000004'")
+{
+    "_id": "00006011b7d00000000000000004",
+    "tag": "340774124",
+    "box_id": "00005ecb95df000000000000000c",
+    "status": "TRANSIT",
+    "last_action": "2021-02-04 11:56:43"
+}
+
+
+
+
+
+COLLECTE
+--------
+une collecte
+    . c'est le rammasage des samples (prélevements saclots) par un chaufeur (driver) attaché à une tournée (round) à une date donnée
+    . est une insatnce de la tournée
+    . commence quand un driver scanne une boite dans cette tournée => status -> ACTIVE
+    . se termeine quand le chauffeur dépose sa collecte de prélèvement au labo => status -> DONE
+    
+
+FONCTIONNEL
+-----------
+driver ouvre la porte
+driver scanne la boite
+driver arrive sur le formulaire
+driver encode une nombre de saclots et éventuellement un commentaire
+
+
+ECRITURE DB
+-----------
+[OK]    1. lancer le find : tous les saclots dans une boite  
+                |--> db.mitsibox_samples.find("box_id='00005ecb95df000000000000000c' and status='INBOX'").fields("_id")
+
+[OK]    2. mettre à jour la collection mitsibox_samples de INBOX à TRANSIT
+                |--> db.mitsibox_samples.modify("box_id='00005ecb95df000000000000000c' and status='INBOX'").set("status", "TRANSIT");
+
+[OK]    3. ajouter un enregistrement par sample du find dans la table mitsibox_sample_events
+                |--> sample_id
+                |--> box_id
+                |--> status 
+                |       |--> INBOX    -> entrée dans une box
+                |       |--> TRANSIT  -> dans le camion
+                |       |--> PENDING  -> l'employée encode via le form mais les puces n'ont pas encore été scannée
+                |       |--> LABO     -> les puces sont scannées
+
+
+
+1. aller voir dans  la collection mitsibox_collect_history si round_id existe à la date d'ajourd'hui
+    Si oui
+        recupérer l'id 
+    Si non 
+        créer une record et récupérer l'id
+            start_date automatique
+    def getCollectionId(self, roundId)
+
+
+
+2. aller dans la collection mitsibox_collect_box_history
+    ajouter un record avec le données 
+            collect_history_id box_id --> id de la table mitsibox_collect_history
+            collect_box_comment 
+            samples_total --> (nbre saclots prélevés)
+            collect_box_timestamp -->automatique
+            status -->  etat de la tournée
+                |--> ACTIVE : la tournée est en cours et passe à active au moment du scanne d'une des boites de la tournée
+                |--> DONE : le driver est passé au labo et a remise sa collecte
+
+3. aller dans la table mitsibox_samples_event 
+    écrire une nouvelle ligne avec
+        box_id
+        sample_id
+        status  --> "TRANSIT"    
+
+
+SCAN D'UN TAG TFID LORS DU DEPOT DANS UNE BOITE
+-----------------------------------------------
+Lorsqu'un tag (rfid) est scanné:
+    . une entrée est crée dans la COLLECTION mitsibox_samples si ce tag n'est pas encore existant
+      et le status est "INBOX" et on connait également le box_id.
+    
+    . en même temps une entrée contenant le sample_id crée dans la collection mitsibox_samples  est ajoutée dans la TABLE
+      mitsibox_sample_events avec le status "INBOX"
+    
+    . A chaque changement de status une entrée (un enregistrement) est ajoutée dans cette table.
+
+
+TROUVER LES SAMPLES DANS UNE BOITE
+----------------------------------
+pour trouver tous les samples qui sont dans la boite lors de la collecte: 
+    db.mitsibox_samples.find("box_id='00005ecb95df000000000000000c' and status='INBOX'").fields("_id")
+
+et tu dois aussi modifier cette collection en changeant le status pour ces documents à "TRANSIT"
+    db.mitsibox_samples.modify("box_id='00005ecb95df000000000000000c' and status='INBOX'").set("status", "TRANSIT");
+
+
+
+
+Si ce sont des tables
     |==> getLabDbAccessTable
-    |==> recs = tableCollections.select().execute()  # cas d'une table
+    |==> recs = tableCollections.select().execute()  # cas d'une table == history
 
-Si collection 
-    |==> recs = tableCollections.find().execute()  # cas d'une collection
+Si ce sont des collections
+    |==> recs = tableCollections.find().execute()  # cas d'une collection == etat courant
 
 
-On ajoute une ligne par saclot a chaque changement de status
-et on update la colonne state
-    ancienne ligne devient inactive
-    nouvelle ligne devient active
 
-STATUS --> changé automatiquement par le programme de Lefred
-    |--> INBOX
-    |--> TRANSIT
-    |--> LABO
+STATUS 
+    |--> statut de la puce RIFID 
+    |--> changé automatiquement par le programme de Lefred
+    |--> ETAT
+    |       |-> INBOX
+    |       |-> TRANSIT
+    |       |-> LABO
 
-STATE  
-    |--> ACTIVE   quand en circulation
-    |--> INACTIVE quand scannée au labo et hors circuit
 
 
 Lors de l'arrivée au labo
