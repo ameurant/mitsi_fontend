@@ -19,7 +19,7 @@ class DisplayBox(ConnexionDb):
         """
         récupère les paramètres des boites au format JSON
         """
-        tablesBoxes = self.getLabDbAccess('mitsibox_boxes')
+        tablesBoxes = self.getLabDbAccessCollection('mitsibox_boxes')
         recs = tablesBoxes.find().execute()
         myBoxes = recs.fetch_all()
         idList = []
@@ -39,7 +39,7 @@ class DisplayBox(ConnexionDb):
         """
         Récupères les infos de toutes les boites
         """
-        tablesBoxes = self.getLabDbAccess('mitsibox_boxes')
+        tablesBoxes = self.getLabDbAccessCollection('mitsibox_boxes')
         recs = tablesBoxes.find().execute()
         myBoxes = recs.fetch_all()
         return myBoxes
@@ -48,7 +48,7 @@ class DisplayBox(ConnexionDb):
         """
         Récupères les infos d'une boite selon son tidentifiant
         """
-        tablesBoxes = self.getLabDbAccess('mitsibox_boxes')
+        tablesBoxes = self.getLabDbAccessCollection('mitsibox_boxes')
         recs = tablesBoxes.find("_id=='%s'" % (idBox,)).execute()
         myBoxe = recs.fetch_one()
         return myBoxe

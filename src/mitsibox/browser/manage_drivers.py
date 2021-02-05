@@ -20,7 +20,7 @@ class ManageDrivers(ConnexionDb):
         """
         Récupères les infos de toutes les chauffeurs
         """
-        tablesDrivers = self.getLabDbAccess('mitsibox_drivers')
+        tablesDrivers = self.getLabDbAccessCollection('mitsibox_drivers')
         recs = tablesDrivers.find().execute()
         # recs = tbl_mitsibox.select().execute()
         myDrivers = recs.fetch_all()
@@ -31,10 +31,19 @@ class ManageDrivers(ConnexionDb):
         """
         Récupères les infos d'un chauffeur selon son ID
         """
-        tablesDrivers = self.getLabDbAccess('mitsibox_drivers')
+        tablesDrivers = self.getLabDbAccessCollection('mitsibox_drivers')
         recs = tablesDrivers.find("_id=='%s'" % (idDriver,)).execute()
         myDriver = recs.fetch_one()
 
+        return myDriver
+
+    def getIdDriverByIdRound(self, idRound):
+        """
+        Récupères les infos d'un chauffeur selon l'id d'une trounée
+        """
+        tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
+        recs = tablesRounds.find("roundDriverId=='%s'" % (idRound,)).execute()
+        myDriver = recs.fetch_one()
         return myDriver
 
     def getDriverIdByLoginPlone(self, loginPlone):
@@ -42,7 +51,7 @@ class ManageDrivers(ConnexionDb):
         Récupères les infos d'un chauffeur selon son ID dans Plone
         """
         if (loginPlone == 'admin'):
-            tablesDrivers = self.getLabDbAccess('mitsibox_drivers')
+            tablesDrivers = self.getLabDbAccessCollection('mitsibox_drivers')
             recs = tablesDrivers.find("idDriver=='%s'" % (loginPlone,)).execute()
             myDriver = recs.fetch_one()
         else:
@@ -83,7 +92,7 @@ class ManageDrivers(ConnexionDb):
         """
         insertion d'une nouvelle drivers
         """
-        tablesDrivers = self.getLabDbAccess('mitsibox_drivers')
+        tablesDrivers = self.getLabDbAccessCollection('mitsibox_drivers')
 
         fields = self.request.form
 
@@ -117,7 +126,7 @@ class ManageDrivers(ConnexionDb):
         """
         insertion d'une nouvelle boite
         """
-        tablesDrivers = self.getLabDbAccess('mitsibox_drivers')
+        tablesDrivers = self.getLabDbAccessCollection('mitsibox_drivers')
 
         fields = self.request.form
         idDriver = fields.get('idDriver', None)
