@@ -34,7 +34,6 @@ class ManageDrivers(ConnexionDb):
         tablesDrivers = self.getLabDbAccessCollection('mitsibox_drivers')
         recs = tablesDrivers.find("_id=='%s'" % (idDriver,)).execute()
         myDriver = recs.fetch_one()
-
         return myDriver
 
     def getIdDriverByIdRound(self, idRound):
@@ -56,8 +55,6 @@ class ManageDrivers(ConnexionDb):
             myDriver = recs.fetch_one()
         else:
             myDriver = loginPlone
-        return myDriver
-
         return myDriver
 
     def createDriver(self, driverId, driverEmail, driverFullname, passDriver):
@@ -101,12 +98,14 @@ class ManageDrivers(ConnexionDb):
         driverId = fields.get('driverId', None)
         driverPass = fields.get('driverPass', None)
         driverFullName = firstName + u" " + lastName
+        driverSmsNotification = fields.get('driverSmsNotification', None)
         driverEmail = 'alain.meurant@skynet.be'
 
         newDriver = {}
         newDriver['lastName'] = lastName
         newDriver['firstName'] = firstName
         newDriver['gsm'] = fields.get('driverGsm', None)
+        newDriver['driverSmsNotification'] = driverSmsNotification
         newDriver['idDriver'] = driverId
         newDriver['passDriver'] = driverPass
 
@@ -136,6 +135,7 @@ class ManageDrivers(ConnexionDb):
         myDriver['firstName'] = fields.get('driverFirstName', None).decode('utf-8')
         myDriver['gsm'] = fields.get('driverGsm', None)
         myDriver['idDriver'] = fields.get('driverId', None)
+        myDriver['driverSmsNotification'] = fields.get('driverSmsNotification', None)
         myDriver['passDriver'] = fields.get('driverPass', None)
 
         tablesDrivers.modify("_id='%s'" % idDriver).patch(myDriver).execute()
