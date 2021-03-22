@@ -45,9 +45,9 @@
 
     <browser:page
         for="*"
-        name="manageDrivers"
-        class=".manage_drivers.ManageDrivers"
-        allowed_interface=".interfaces.IManageDrivers"
+        name="manageFleetManagers"
+        class=".manage_fleet_managers.ManageFleetManagers"
+        allowed_interface=".interfaces.IManageFleetManagers"
         permission="zope.Public"
         />
 
@@ -235,6 +235,49 @@
         permission="zope.Public"
         attribute="getJsonOfAllBoxesFromRound"
         allowed_interface=".interfaces.IManageBox"
+        />
+
+
+<!-- MANAGE FLEETMANAGESR -->
+    <browser:page
+        name="ajouter-un-gestionnaire-de-flotte"
+        for="*"
+        class=".manage_fleet_managers.ManageFleetManagers"
+        template="templates/gestion_db/fleet_managers/admin_ajouter_fleet_manager.pt"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageFleetManagers"
+        />
+    <browser:page
+        name="modifier-un-gestionnaire-de-flotte"
+        for="*"
+        class=".manage_fleet_managers.ManageFleetManagers"
+        template="templates/gestion_db/fleet_managers/admin_modifier_fleet_manager.pt"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageFleetManagers"
+        />
+    <browser:page
+        name="listing-des-gestionnaires-de-flotte"
+        for="*"
+        class=".manage_fleet_managers.ManageFleetManagers"
+        template="templates/gestion_db/fleet_managers/admin_lister_fleet_manager.pt"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageFleetManagers"
+        />
+    <browser:page
+        name="insertFleetManager"
+        for="*"
+        class=".manage_fleet_managers.ManageFleetManagers"
+        attribute="insertFleetManager"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageFleetManagers"
+        />
+    <browser:page
+        name="updateFleetManager"
+        for="*"
+        class=".manage_fleet_managers.ManageFleetManagers"
+        attribute="updateFleetManager"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageFleetManagers"
         />
 
 

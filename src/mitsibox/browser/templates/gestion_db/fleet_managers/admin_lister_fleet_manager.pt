@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="fr"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="box">
+
+<body>
+
+<metal:main fill-slot="content-core"
+            tal:define="fleetManagersView context/@@manageFleetManagers;
+                        allFleetManagers fleetManagersView/getAllFleetManagers">
+<!--
+<nav class="icone-toggle-listing-box">
+    <a href=""
+        tal:attributes="href string:${context/portal_url}/show-all-boxes">
+        <i class="fas fa-th"></i>
+    </a>
+</nav>
+-->
+<h2>
+    <i class="fas fa-ellipsis-v"></i>
+    Liste des gestionnaires de flotte
+</h2>
+<nav class="menu-bouton">
+    <a href=""
+       tal:attributes="href string:${context/portal_url}/administration-de-la-db/gestion-des-gestionnaires-de-flotte/ajouter-un-gestionnaire-de-flotte"
+       class="btn btn-primary"
+       role="button">
+        Ajouter un gestionnaire de flotte
+    </a>
+</nav>
+
+<div class="flex-box">  
+    <table border="1" class="listing">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>GSM</th>
+                <th>Notification</th>
+                <th>Identifiant</th>
+                <th>Password</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tal:boucle tal:repeat="fleetManager allFleetManagers">
+            <tr>
+                <td class="text-center">
+                    <span tal:content="fleetManager/fleetManagerLastName" />
+                </td>
+                <td class="text-center">
+                    <span tal:content="fleetManager/fleetManagerFirstName" />
+                </td>
+                <td class="text-center">
+                    <span tal:content="fleetManager/fleetManagerGsm" />
+                </td>
+                <td class="text-center">
+                    <span tal:content="fleetManager/fleetManagerSmsNotification" />
+                </td>
+                <td class="text-center">
+                    <span tal:content="fleetManager/fleetManagerIdPlone" />
+                </td>
+                <td class="text-center">
+                    <span tal:content="fleetManager/fleetManagerPassPlone" />
+                </td>
+                <td class="text-center">
+                    <nav class="menu-bouton">
+                        <a tal:attributes="href string:${context/portal_url}/administration-de-la-db/gestion-des-gestionnaires-de-flotte//modifier-un-gestionnaire-de-flotte?fleetManagerId=${fleetManager/_id}"
+                           class="noborder"
+                           alt="Modifier ce gestionnaire"
+                           title="Modifier ce gestionnaire"
+                           role="button">
+                            <i class="bouton-nav fad fa-cogs"></i>
+                        </a>
+                    </nav>
+                </td>
+            </tr>
+        </tal:boucle>
+    </table>
+</div>
+
+</metal:main>
+</body>
+</html>

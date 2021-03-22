@@ -1,0 +1,111 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="fr"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="box">
+
+<body>
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<metal:main fill-slot="content-core"
+            tal:define="fleetManagerId request/fleetManagerId;
+                        fleetManagersView context/@@manageFleetManagers;
+                        fleetManager python: fleetManagersView.getFleetManagerById(fleetManagerId)">
+
+    <section class="formulaire">
+        <h2>
+            <i class="fas fa-ellipsis-v"></i>
+            Modifier ce gestionnaire
+        </h2>
+        <form action="updateFleetManager"
+              method="post">
+              
+            <div class="form-input">
+                <label for="fleet-manager-last-name">
+                    Nom :
+                </label>
+                <input type="text"
+                       name="fleetManagerLastName"
+                       id="fleet-manager-last-name"
+                       tal:attributes="value fleetManager/fleetManagerLastName" />
+            </div>
+            <div class="form-input">
+                <label for="fleet-manager-first-name">
+                    Prénom :
+                </label>
+                <input type="text"
+                       name="fleetManagerFirstName"
+                       id="fleet-manager-first-name"
+                       tal:attributes="value fleetManager/fleetManagerFirstName" />
+            </div>
+            <div class="form-input">
+                <label for="fleet-manager-email">
+                    Email :
+                </label>
+                <input type="text"
+                       name="fleetManagerEmail"
+                       id="fleet-manager-email"
+                       tal:attributes="value fleetManager/fleetManagerEmail" />
+            </div>
+            <div class="form-input">
+                <label for="fleet-manager-gsm">
+                    GSM :
+                </label>
+                <input type="text"
+                       name="fleetManagerGsm"
+                       id="fleet-manager-gsm"
+                       tal:attributes="value fleetManager/fleetManagerGsm" />
+            </div>
+            <div class="form-input">
+                <label for="fleet-manager-sms-notification">
+                    Notification SMS :
+                </label>
+                Oui
+                <input type="radio"
+                       name="fleetManagerSmsNotification"
+                       id="fleet-manager-sms-notification"
+                       tal:attributes="value fleetManager/fleetManagerSmsNotification" />
+                Non
+                <input type="radio"
+                       name="fleetManagerSmsNotification"
+                       id="fleet-manager-sms-notification"
+                       tal:attributes="value fleetManager/fleetManagerSmsNotification" />
+            </div>
+            <div class="form-input">
+                <label for="fleet-manager-id-plone">
+                    Identifiant :
+                </label>
+                <input type="text"
+                       name="fleetManagerIdPlone"
+                       id="fleet-manager-id-plone"
+                       required
+                       tal:attributes="value python:fleetManager.fleetManagerIdPlone or None"  />
+            </div>
+            <div class="form-input">
+                <label for="fleet-manager-pass-plone">
+                    Password :
+                </label>
+                <input type="text"
+                       name="fleetManagerPassPlone"
+                       id="fleet-manager-pass-plone"
+                       required
+                       tal:attributes="value python:fleetManager.fleetManagerPassPlone or None" />
+            </div>
+
+            <div class="formControls" align="center">
+                <input type="hidden"
+                       name="fleetManagerId"
+                       tal:attributes="value fleetManagerId" />
+                <input type="submit"
+                       name="submit"
+                       value="Modifier" />
+            </div>
+        </form>
+    </section>
+</metal:main>
+</body>
+</html>

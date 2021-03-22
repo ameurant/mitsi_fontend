@@ -54,6 +54,21 @@
                        tal:attributes="value driver/gsm" />
             </div>
             <div class="form-input">
+                <label for="driver-sms-notification">
+                    Notification SMS :
+                </label>
+                Oui
+                <input type="radio"
+                       name="driverSmsNotification"
+                       id="driver-sms-notification"
+                       tal:attributes="value driver/driverSmsNotification" />
+                Non
+                <input type="radio"
+                       name="driverSmsNotification"
+                       id="driver-sms-notification"
+                       value="False" />
+            </div>
+            <div class="form-input">
                 <label for="driver-id">
                     Identifiant :
                 </label>
