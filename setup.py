@@ -27,7 +27,8 @@ setup(
         'plone.api',
         'plone.app.dexterity',
         'setuptools',
-        'z3c.jbot'
+        'z3c.jbot',
+        'mysql-connector-python',
     ],
     entry_points="""
       [z3c.autoinclude.plugin]
