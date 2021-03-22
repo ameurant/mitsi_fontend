@@ -51,6 +51,21 @@
                        value="" />
             </div>
             <div class="form-input">
+                <label for="driver-sms-notification">
+                    Notification SMS :
+                </label>
+                Oui
+                <input type="radio"
+                       name="driverSmsNotification"
+                       id="driver-sms-notification"
+                       value="" />
+                Non
+                <input type="radio"
+                       name="driverSmsNotification"
+                       id="driver-sms-notification"
+                       value="" />
+            </div>
+            <div class="form-input">
                 <label for="driver-id">
                     Identifiant :
                 </label>

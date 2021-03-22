@@ -39,6 +39,7 @@
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>GSM</th>
+                <th>Notification</th>
                 <th>Identifiant</th>
                 <th>Password</th>
                 <th></th>
@@ -54,6 +55,9 @@
                 </td>
                 <td class="text-center">
                     <span tal:content="driver/gsm" />
+                </td>
+                <td class="text-center">
+                    <span tal:content="driver/driverSmsNotification" />
                 </td>
                 <td class="text-center">
                     <span tal:content="driver/idDriver" />
