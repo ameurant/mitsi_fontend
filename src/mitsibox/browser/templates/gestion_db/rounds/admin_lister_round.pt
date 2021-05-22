@@ -30,7 +30,8 @@
 </nav>
 
 <tal:boucle tal:repeat="myRound allRounds">
-    <div class="card border-info mb-3"
+    <div id="card-listing-round"
+         class="card border-info mb-3"
          tal:define="idRound myRound/_id;
                      idDriver myRound/roundDriverId;
                      myRoundDistance python:roundsView.getDistanceRound(idRound);
@@ -40,30 +41,53 @@
             <div>
                 Chauffeur :
                 <span tal:content="myDriver/firstName"
-                      class="form-input-data" /> 
+                      class="data-box-level2" />
                 <span tal:content="myDriver/lastName"
-                      class="form-input-data" />
+                      class="data-box-level2" />
             </div>
             <div>
                 Distance estimée :
                 <span tal:content="myRoundDistance"
-                      class="form-input-data" /> km
+                      class="data-box-level2" /> km
             </div>
         </div>
-        <div class="card-body text-secondary">
+        <div class="card-body text-secondary flex-box flex-justify-content-space-between">
             <tal:block tal:define="allBoxes myRound/roundMitsiboxList">
                 <tal:boucle tal:repeat="idBox allBoxes">
                     <tal:boxe tal:define="myBox python:boxView.getOneBoxById(idBox)">
-                        <div> 
-                            <span tal:content="myBox/name"></span>
-                            <span tal:content="myBox/address"></span>
-                            <span tal:content="myBox/cp"></span>
-                            <span tal:content="myBox/localite"></span>
-                            <span tal:content="myBox/lat"></span>
-                            <span tal:content="myBox/long"></span>
-                            <tal:if tal:condition="exists: myBox/last_deposit">
-                                <span tal:content="myBox/last_deposit"></span>
-                            </tal:if>
+                        <div class="box-round-listing flex-item ">
+                            <div>
+                                <span tal:content="myBox/name"
+                                      class="box-round-listing-orange" />
+                            </div>
+                            <div>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span tal:content="myBox/address"></span>
+                                <br />
+                                <span tal:content="myBox/cp"></span>
+                                <span tal:content="myBox/localite"></span>
+                                <br />
+                                <i class="fas fa-globe"></i>
+                                <span tal:content="myBox/lat"></span><br />
+                                <span tal:content="myBox/long"></span>
+                            </div>
+                            <div>
+                                <tal:if tal:condition="exists: myBox/deposit_count">
+                                    Prélèvements :
+                                    <span id=""
+                                          tal:attributes="id string:box-deposit-count"
+                                          class="box-round-listing-bleu"
+                                          tal:content="myBox/deposit_count" />
+                                </tal:if>
+                                <tal:if tal:condition="exists: myBox/last_deposit">
+                                    <br />
+                                    Dernier dépôt :
+                                    <br />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <span tal:content="myBox/last_deposit"
+                                          class="box-round-listing-bleu" />
+                                </tal:if>
+                            </div>
                         </div>
                     </tal:boxe>
                 </tal:boucle>
@@ -89,7 +113,7 @@
                 <span tal:content="idRound" class="discret" />
             </div>
         </div>
-            
+
     </div>
 </tal:boucle>
 

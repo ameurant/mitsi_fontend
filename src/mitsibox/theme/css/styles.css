@@ -127,6 +127,24 @@ a.noborder{
     color:#0a0;
 }
 
+.iconeLabo{
+    font-size: 40px;
+    color: #ff29ff;
+}
+.iconeNormale{
+    font-size: 40px;
+    color: #28459d;
+}
+.iconeVide{
+    font-size: 40px;
+    color: #666666;
+}
+.iconeAlert{
+    font-size: 40px;
+    color: #f00;
+}
+
+
 .bleu-glyphe{
     color:#01b0f4;
 }
@@ -170,7 +188,11 @@ a.noborder{
 /**** FLEX BOX ***/
 .flex-box{
     display:flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: no-wrap;
+}
+.flex-box > .flex-item{
+    flex: 1 1 0;
 }
 .flex-justify-content-space-between{
     justify-content: space-between;
@@ -338,11 +360,13 @@ h2{
 }
 
 .qr-code-50{
+    position:relative;
+    left:20px;
     margin-top:5px;
-    text-align:center;
+    width:120px;
 }
 .qr-code-50 img{
-    width:50%;
+    /*width:50%;*/
 }
 
 
@@ -378,6 +402,35 @@ h2{
 }
 
 
+ /*** LISTING TOURNEE ***/
+.box-round-listing{
+    background-color: #242424; /*#252a33;*/
+    margin:5px;
+    border-radius: 5px;
+    padding:5px;
+    color: #aaa;
+}
+.box-round-listing div:nth-child(1){
+    text-align: center;
+    border-bottom:1px solid rgba(250, 168, 54, .4);
+    margin-bottom: 3px;
+}
+.box-round-listing div:nth-child(2){
+    padding-left:20px;
+}
+.box-round-listing div:nth-child(3){
+    padding-left:20px;
+    margin-top: 8px;
+}
+
+.box-round-listing-orange{
+    color: #faa836;
+}
+.box-round-listing-bleu{
+    color: #69d6ff;
+}
+
+
 /**** RESPONSIVE ****/
 
 /**** DESKTOP *****/
@@ -386,6 +439,12 @@ h2{
     .plone-toolbar-left-expanded .container{
         max-width:100% !important;
         width:100% !important;
+    }
+
+    /*** TOURNEE ***/
+    #card-listing-round{
+        width: 800px;
+        margin:auto;
     }
 
 }

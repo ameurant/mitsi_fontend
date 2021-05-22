@@ -20,14 +20,14 @@
                         myDriver python:driversView.getDriverById(myRound.roundDriverId);
                         myRoundDistance python:roundsView.getDistanceRound(idRound);
                         allBoxes python:boxView.getAllBoxesFromRound(idRound)">
-                        
+
                         <!--myDistance python:roundsView.getDistanceRound(idRound);-->
 
     <h2>
         <i class="fas fa-ellipsis-v"></i>
         Information sur la tournée : <em>${myRound/roundName}</em>
     </h2>
-    
+
     <div id="box-tournee">
         <section class="section-donnee">
             <div class="section-donnee-box-flex">
@@ -55,24 +55,36 @@
             <div class="form-input">
                 <tal:boucle tal:repeat="myBox allBoxes">
                     <div class="section-donnee-box-flex">
-                        <div class="section-donnee-box"
+                        <div class="box-round-listing section-donnee-box"
                              tal:define="idBox myBox/_id">
-                            <strong> 
+                            <div>
                                 <span tal:content="myBox/name"
                                       class="orange" />
-                            </strong>
-                            <br />
-                            <span tal:content="myBox/address" />
-                            <br />
-                            <span tal:content="myBox/cp" /> <span tal:content="myBox/localite" />
-                            <br />
-                            <span tal:content="myBox/lat" />
-                            <br />
-                            <span tal:content="myBox/long" />
-                            <figure class="qr-code-50">
-                                <img src=""
-                                     tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
-                            </figure>
+                            </div>
+                            <div>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span tal:content="myBox/address" />
+                                <br />
+                                <span tal:content="myBox/cp" /> <span tal:content="myBox/localite" />
+                                <br />
+                                <i class="fas fa-globe"></i>
+                                <span tal:content="myBox/lat" />
+                                <br />
+                                <span tal:content="myBox/long" />
+                                <figure class="qr-code-50">
+                                    <img src=""
+                                         tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
+                                </figure>
+                            </div>
+                            <div>
+                                <tal:if tal:condition="exists: myBox/deposit_count">
+                                    Prélèvements :
+                                    <span id=""
+                                          tal:attributes="id string:box-deposit-count"
+                                          class="box-round-listing-bleu"
+                                          tal:content="myBox/deposit_count" />
+                                </tal:if>
+                            </div>
                         </div>
                     </div>
                 </tal:boucle>
@@ -87,32 +99,43 @@
 
 <script>
 require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
-    
+
     let idRound = "<span tal:replace='idRound' />";
     console.log(idRound);
 
-    
+
     function displayMap(allBoxes){
-        let iconeLab = L.icon({
-                iconUrl: '++theme++mitsibox/images/marker-labo.png',
-                shadowUrl: '++theme++mitsibox/images/marker-shadow.png',
-                iconSize: [25, 41], // dimension de l’icone
-                shadowSize: [41, 41], // taille de l’ombre
-                //iconAnchor: [0, 5], // point ou l’icône va se positionner
-                shadowAnchor: [15, 15], // même chose pour l’ombre
-                popupAnchor: [-3, -10] // point à partir duquel le pop-up devrait s’ouvrir relativement par rapport à iconAnchor
+        let iconeLab = L.divIcon({
+                html: '<i class="fas fa-map-marker-alt"></i>',
+                iconSize: [50, 50],
+                className: 'iconeLabo',
+                popupAnchor: [-10, -10] // point à partir duquel le pop-up devrait s’ouvrir relativement par rapport à iconAnchor
                 });
 
-        let iconeAlert = L.icon({
-                iconUrl: '++theme++mitsibox/images/marker-icon-red.png',
-                iconSize: [25, 41], // dimension de l’icone
-                shadowSize: [41, 41], // taille de l’ombre
-                popupAnchor: [-3, -10] // point à partir duquel le pop-up devrait s’ouvrir relativement par rapport à iconAnchor
-                });
+        let iconeAlert = L.divIcon({
+            html: '<i class="fas fa-map-marker-alt"></i>',
+            iconSize: [50, 50],
+            className: 'iconeAlert',
+            popupAnchor: [-10, -10]
+        });
+
+        let iconeNormale = L.divIcon({
+            html: '<i class="fas fa-map-marker-alt"></i>',
+            iconSize: [50, 50],
+            className: 'iconeNormale',
+            popupAnchor: [-10, -10]
+        });
+
+        let iconeVide = L.divIcon({
+            html: '<i class="fas fa-map-marker-alt"></i>',
+            iconSize: [50, 50],
+            className: 'iconeVide',
+            popupAnchor: [-10, -10]
+        });
 
         let mymap = L.map('map-mitsiboxes').setView([50.581997, 4.078926], 10);
         let marker = L.marker([50.581997, 4.078926], {icon: iconeLab}).addTo(mymap).bindPopup("<b> CHU Haute Senne </b>");
-        
+
         /*
         let tableau = [["BOX lefred", 50.464886, 4.100733],
                        ["Box Alain", 50.45569460014328, 4.171436625161833],
@@ -125,11 +148,15 @@ require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
             let longBox = allBoxes[i]['long'];
             let depositCount = allBoxes[i]['deposit_count'];
 
+            if (depositCount == 0){
+                console.log('depositCount=0');
+                let marker = L.marker([latBox, longBox], {icon: iconeVide}).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
+            }
             if (depositCount > 10){
                 let marker = L.marker([latBox, longBox], {icon: iconeAlert}).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
             }
-            else{
-                let marker = L.marker([latBox, longBox]).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
+            if (depositCount >=1 && depositCount < 10){
+                let marker = L.marker([latBox, longBox], {icon: iconeNormale}).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
             }
         };
 
@@ -150,12 +177,12 @@ require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
             type:'GET',
             dataType: 'json',
             data: {idRound: idRound},
-            success: 
+            success:
                 function(data){
                     console.log("data : ", data);
                     displayMap(data);
                 },
-            error: 
+            error:
                 function(xhr, status, error, textStatus, errorThrown) {
                     let errorMessage = xhr.status + ': ' + xhr.textStatus + ' ' + xhr.statusText + ' ' + errorThrown;
                     alert('Error - ' + errorMessage);
@@ -163,7 +190,7 @@ require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
         })
     }
     getBoxOfRound(idRound);
-    
+
 });
 </script>
 </metal:main>
