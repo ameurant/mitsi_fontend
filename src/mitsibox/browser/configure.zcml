@@ -53,6 +53,14 @@
 
     <browser:page
         for="*"
+        name="manageDrivers"
+        class=".manage_drivers.ManageDrivers"
+        allowed_interface=".interfaces.IManageDrivers"
+        permission="zope.Public"
+        />
+
+    <browser:page
+        for="*"
         name="manageRounds"
         class=".manage_rounds.ManageRounds"
         allowed_interface=".interfaces.IManageRounds"
