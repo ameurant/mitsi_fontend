@@ -197,6 +197,15 @@
                           tal:condition="exists: myBox/top_status"
                           tal:content="myBox/top_status" />
                 </div>
+                <div>
+                    <span tal:condition="exists: myBox/alertsms"
+                          tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
+                        <i class="fas fa-sms pat-tooltip"
+                           data-toggle="tooltip"
+                           title="Notification SMS"
+                           ></i>
+                    </span>
+                </div>
             </div>
             <hr />
             <div tal:define="myRound python:roundsView.getRoundsOfBox(idBox)">
