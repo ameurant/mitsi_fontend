@@ -41,7 +41,7 @@
                 <th>Nom</th>
                 <th>Localisation</th>
                 <th>SSID Wifi</th>
-                <th>Alert Sms</th>
+                <th>Notification Sms</th>
                 <th>Aduino</th>
                 <th>Tournée</th>
                 <th>QR-Code</th>
