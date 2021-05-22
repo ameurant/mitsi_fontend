@@ -117,10 +117,12 @@
                 <label for="box-alert-sms">
                     Alerte SMS :
                 </label>
+                &nbsp;&nbsp;&nbsp;
                 oui <input type="radio"
                            name="boxAlertSms"
                            id="box-alert-sms"
                            value="True" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 non <input type="radio"
                            name="boxAlertSms"
                            id="box-alert-sms"
