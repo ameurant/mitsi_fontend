@@ -178,20 +178,22 @@
             <div class="flex-box flex-justify-content-space-around">
                 <div>
                     <div id=""
+                         class=""
                          tal:attributes="id string:icone${index}-front-door"><!--imgjs--></div>
                     <span id=""
-                          tal:attributes="id string:box${index}-door-status"
-                          class="data-box discret"
+                          tal:attributes="id string:box${index}-door-status;
+                                          class python: myBox.door_status=='OPEN' and 'discret rouge' or 'discret vert'"
                           tal:condition="exists: myBox/door_status"
                           tal:content="myBox/door_status" />
                 </div>
 
                 <div>
                     <div id=""
+                         class=""
                          tal:attributes="id string:icone${index}-top-door"><!--imgjs--></div>
                     <span id=""
-                          tal:attributes="id string:box${index}-top-status"
-                          class="data-box discret"
+                          tal:attributes="id string:box${index}-top-status;
+                                          class python: myBox.top_status=='OPEN' and 'discret rouge' or 'discret vert'"
                           tal:condition="exists: myBox/top_status"
                           tal:content="myBox/top_status" />
                 </div>

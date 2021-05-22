@@ -156,8 +156,9 @@
                     </div>
 
                     <span id=""
-                          tal:attributes="id string:box${index}-door-status"
-                          class="data-box discret"
+                          class=""
+                          tal:attributes="id string:box${index}-door-status;
+                                          class python: myBox.door_status=='OPEN' and 'discret rouge' or 'discret vert'
                           tal:condition="exists: myBox/door_status"
                           tal:content="myBox/door_status" />
 
@@ -166,6 +167,7 @@
             <td>
                 <div>
                     <div id=""
+                         class=""
                          tal:attributes="id string:icone${index}-top-door">
                          <!--imgjs-->
                     </div>
