@@ -115,7 +115,7 @@
             </div>
             <div class="form-input">
                 <label for="box-alert-sms">
-                    Alerte SMS :
+                    Notification SMS :
                 </label>
                 &nbsp;&nbsp;&nbsp;
                 oui <input type="radio"
