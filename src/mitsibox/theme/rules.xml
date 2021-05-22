@@ -19,28 +19,28 @@
         <link rel="apple-touch-icon"
               href="{$navigation_root_url}/++theme++mitsibox/images/touch_icon.png" />
 
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
               rel="stylesheet"
-              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+              integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
               crossorigin="anonymous" />
-                
+
         <link href="https://pro.fontawesome.com/releases/v5.15.1/css/all.css"
               integrity="sha384-9ZfPnbegQSumzaE7mks2IYgHoayLtuto3AS6ieArECeaR8nCfliJVuLh/GaQ1gyM"
               crossorigin="anonymous"
               rel="stylesheet" />
-        
+
         <link href="{$navigation_root_url}/++theme++mitsibox/css/multi.min.css"
               rel="stylesheet"  />
 
-        <link href="{$navigation_root_url}/++theme++mitsibox/css/leaflet.css" 
+        <link href="{$navigation_root_url}/++theme++mitsibox/css/leaflet.css"
               rel="stylesheet" />
-        
+
         <link href="{$navigation_root_url}/++theme++mitsibox/css/styles.css"
-              rel="stylesheet" />        
+              rel="stylesheet" />
     </after>
 
-    
-    
+
+
     <drop css:content-children="#portal-searchbox" />
 
 </rules>
