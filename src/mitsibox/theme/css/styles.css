@@ -89,25 +89,34 @@ body {
 }
 .data-box{
     color:#ff6e03;
+    font-size:1.5rem;
+}
+.data-box-level2{
+    color:#ff6e03;
+    font-size:1rem;
+}
+h2.data-box{
+    font-size:2rem;
+    padding:0px !important;
 }
 .address-box{
-    width:150px;
+/*    width:150px;*/
 }
 .date-box{
-    font-size:0.7em;
+    font-size:1rem;
     text-align:left;
 }
 
+a{
+    text-decoration:none !important;
+}
 
 a.noborder{
     border-bottom:none !important;
 }
 
 .discret{
-    font-size:0.8em;
-}
-.important{
-    /*font-size:1.1em;*/
+    font-size:0.7rem;
 }
 
 .rouge{
@@ -162,7 +171,6 @@ a.noborder{
 .flex-box{
     display:flex;
     flex-wrap: wrap;
-    /*flex: 0 1;*/
 }
 .flex-justify-content-space-between{
     justify-content: space-between;
@@ -214,6 +222,16 @@ h2{
     text-align:center;
     background-color:#e6e6e6;
     vertical-align:top !important;
+}
+
+#listing-box-table{
+}
+
+#listing-box-table td {
+    text-align:center;
+}
+#listing-box-table td a{
+    text-decoration:none;
 }
 
 
@@ -319,7 +337,6 @@ h2{
     transition: all 0.3s ease-in-out;
 }
 
-
 .qr-code-50{
     margin-top:5px;
     text-align:center;
@@ -364,13 +381,24 @@ h2{
 /**** RESPONSIVE ****/
 
 /**** DESKTOP *****/
-@media only screen and (min-width : 1025px){
+@media (min-width : 1025px){
+    .container,
+    .plone-toolbar-left-expanded .container{
+        max-width:100% !important;
+        width:100% !important;
+    }
+
 }
 
 
 
 /**** TABLETTE *****/
-@media only screen and (min-width : 769px) and (max-width: 1024px){
+@media (min-width : 769px) and (max-width: 1024px){
+    .container,
+    .plone-toolbar-left-expanded .container{
+        max-width:100% !important;
+        width: 100% !imporant;
+    }
 
 }
 
@@ -378,6 +406,11 @@ h2{
 
 /**** PHONE *****/
 @media (max-width: 768px) {
+    .container,
+    .plone-toolbar-left-expanded .container,{
+        max-width:100%;
+        width: 100% !imporant;
+    }
     #box-tournee{
         display: flex;
         flex-direction:column;
