@@ -62,39 +62,6 @@
                           tal:condition="exists: myBox/last_humidity"
                           tal:content="myBox/last_humidity" />
                 </div>
-                <div tal:condition="exists: myBox/battery_status">
-                    <!-- statut de la batterie -->
-                    <tal:block tal:define="batteryStatus myBox/battery_status;
-                                           infoBattery python:boxesView.splitStatusBatteryBox(batteryStatus)">
-                        <div tal:condition="python: infoBattery[0]=='GOOD'"
-                              data-toggle="tooltip"
-                              title=""
-                              tal:attributes="title python: infoBattery[1]"
-                              class="vert pat-tooltip">
-                            <i class="fad fa-battery-full  battery"></i>
-                        </div>
-                        <div tal:condition="python: infoBattery[0]=='OK'"
-                             data-toggle="tooltip"
-                             title=""
-                             tal:attributes="title python: infoBattery[1]"
-                             class=" orange pat-tooltip">
-                            <i class="fad fa-battery-half battery"></i>
-                        </div>
-                        <div tal:condition="python: infoBattery[0]=='LOW'"
-                             data-toggle="tooltip"
-                             title=""
-                             tal:attributes="title python: infoBattery[1]"
-                             class=" rouge pat-tooltip">
-                            <i class="fad fa-battery-quarter battery"></i>
-                        </div>
-                        <div tal:condition="python: infoBattery[0]=='POWERED'"
-                             data-toggle="tooltip"
-                             title="Power"
-                             class="power-black pat-tooltip">
-                            <i class="fad fa-plug"></i>
-                        </div>
-                    </tal:block>
-                </div>
             </h3>
             <hr />
 
@@ -178,8 +145,10 @@
             <div class="flex-box flex-justify-content-space-around">
                 <div>
                     <div id=""
-                         class=""
-                         tal:attributes="id string:icone${index}-front-door"><!--imgjs--></div>
+                         class="pat-tooltip"
+                         tal:attributes="id string:icone${index}-front-door"
+                         data-toggle="tooltip"
+                         title="Porte Frontale"><!--imgjs--></div>
                     <span id=""
                           tal:attributes="id string:box${index}-door-status;
                                           class python: myBox.door_status=='OPEN' and 'discret rouge' or 'discret vert'"
@@ -189,8 +158,10 @@
 
                 <div>
                     <div id=""
-                         class=""
-                         tal:attributes="id string:icone${index}-top-door"><!--imgjs--></div>
+                         class="pat-tooltip"
+                         tal:attributes="id string:icone${index}-top-door"
+                         data-toggle="tooltip"
+                         title="Porte supérieure"><!--imgjs--></div>
                     <span id=""
                           tal:attributes="id string:box${index}-top-status;
                                           class python: myBox.top_status=='OPEN' and 'discret rouge' or 'discret vert'"
@@ -205,6 +176,39 @@
                            title="Notification SMS"
                            ></i>
                     </span>
+                </div>
+                <div tal:condition="exists: myBox/battery_status">
+                    <!-- statut de la batterie -->
+                    <tal:block tal:define="batteryStatus myBox/battery_status;
+                                           infoBattery python:boxesView.splitStatusBatteryBox(batteryStatus)">
+                        <div tal:condition="python: infoBattery[0]=='GOOD'"
+                              data-toggle="tooltip"
+                              title="Battery good"
+                              tal:attributes="title python: infoBattery[1]"
+                              class="data-box vert pat-tooltip">
+                            <i class="fad fa-battery-full  battery"></i>
+                        </div>
+                        <div tal:condition="python: infoBattery[0]=='OK'"
+                             data-toggle="tooltip"
+                             title="Battery Ok"
+                             tal:attributes="title python: infoBattery[1]"
+                             class="data-box orange pat-tooltip">
+                            <i class="fad fa-battery-half battery"></i>
+                        </div>
+                        <div tal:condition="python: infoBattery[0]=='LOW'"
+                             data-toggle="tooltip"
+                             title="Battery low"
+                             tal:attributes="title python: infoBattery[1]"
+                             class="data-box rouge pat-tooltip">
+                            <i class="fad fa-battery-quarter battery"></i>
+                        </div>
+                        <div tal:condition="python: infoBattery[0]=='POWERED'"
+                             data-toggle="tooltip"
+                             title="Secteur"
+                             class="data-box power-black pat-tooltip">
+                            <i class="fad fa-plug"></i>
+                        </div>
+                    </tal:block>
                 </div>
             </div>
             <hr />
