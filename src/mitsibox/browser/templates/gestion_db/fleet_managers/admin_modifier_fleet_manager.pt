@@ -23,7 +23,7 @@
         </h2>
         <form action="updateFleetManager"
               method="post">
-              
+
             <div class="form-input">
                 <label for="fleet-manager-last-name">
                     Nom :
@@ -64,16 +64,25 @@
                 <label for="fleet-manager-sms-notification">
                     Notification SMS :
                 </label>
+                &nbsp;&nbsp;&nbsp;
                 Oui
                 <input type="radio"
                        name="fleetManagerSmsNotification"
                        id="fleet-manager-sms-notification"
-                       tal:attributes="value fleetManager/fleetManagerSmsNotification" />
+                       value="True"
+                       tal:attributes="checked python:fleetManager.fleetManagerSmsNotification == 'True' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Non
                 <input type="radio"
                        name="fleetManagerSmsNotification"
                        id="fleet-manager-sms-notification"
-                       tal:attributes="value fleetManager/fleetManagerSmsNotification" />
+                       value="False"
+                       tal:attributes="checked python:fleetManager.fleetManagerSmsNotification == 'False' or None"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span tal:condition="exists: fleetManager/fleetManagerSmsNotification"
+                      tal:attributes="class python: fleetManager.fleetManagerSmsNotification=='True' and 'vert' or 'rouge'">
+                    <i class="fas fa-sms"></i>
+                </span>
             </div>
             <div class="form-input">
                 <label for="fleet-manager-id-plone">
