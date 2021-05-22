@@ -79,7 +79,7 @@
         permission="zope2.View"
         />
 
-    
+
 <!-- CONTROL CENTER -->
     <browser:page
         for="*"
@@ -186,7 +186,7 @@
         allowed_interface=".interfaces.IManageLabs"
         />
 
-    
+
 <!-- MANAGE BOX -->
     <browser:page
         name="ajouter-une-mitsibox"
@@ -240,7 +240,7 @@
 
 <!-- MANAGE FLEETMANAGESR -->
     <browser:page
-        name="ajouter-un-gestionnaire-de-flotte"
+        name="ajouter-un-fleet-manager"
         for="*"
         class=".manage_fleet_managers.ManageFleetManagers"
         template="templates/gestion_db/fleet_managers/admin_ajouter_fleet_manager.pt"
@@ -248,7 +248,7 @@
         allowed_interface=".interfaces.IManageFleetManagers"
         />
     <browser:page
-        name="modifier-un-gestionnaire-de-flotte"
+        name="modifier-un-fleet-manager"
         for="*"
         class=".manage_fleet_managers.ManageFleetManagers"
         template="templates/gestion_db/fleet_managers/admin_modifier_fleet_manager.pt"
@@ -256,7 +256,7 @@
         allowed_interface=".interfaces.IManageFleetManagers"
         />
     <browser:page
-        name="listing-des-gestionnaires-de-flotte"
+        name="listing-des-fleet-managers"
         for="*"
         class=".manage_fleet_managers.ManageFleetManagers"
         template="templates/gestion_db/fleet_managers/admin_lister_fleet_manager.pt"
