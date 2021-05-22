@@ -105,7 +105,7 @@ class ManageFleetManagers(ConnexionDb):
         ploneUtils = getToolByName(self.context, 'plone_utils')
         message = u"Le fleet manager est enregistré."
         ploneUtils.addPortalMessage(message, 'info')
-        url = "%s/administration-de-la-db/gestion-des-gestionnaires-de-flotte/listing-des-gestionnaires-de-flotte" % (portalUrl,)
+        url = "%s/administration-de-la-db/gestion-des-fleet-managers/listing-des-gestionnaires-de-flotte" % (portalUrl,)
         self.request.response.redirect(url)
         return ''
 
@@ -133,6 +133,6 @@ class ManageFleetManagers(ConnexionDb):
         ploneUtils = getToolByName(self.context, 'plone_utils')
         message = u"les données du fleet manager ont été modifiées."
         ploneUtils.addPortalMessage(message, 'info')
-        url = "%s/administration-de-la-db/gestion-des-gestionnaires-de-flotte/listing-des-gestionnaires-de-flotte" % (portalUrl,)
+        url = "%s/administration-de-la-db/gestion-des-fleet-managers/listing-des-gestionnaires-de-flotte" % (portalUrl,)
         self.request.response.redirect(url)
         return ''

@@ -30,7 +30,7 @@
 </div>
 <nav class="menu-bouton">
     <a href=""
-       tal:attributes="href string:${context/portal_url}/administration-de-la-db/gestion-des-gestionnaires-de-flotte/ajouter-un-gestionnaire-de-flotte"
+       tal:attributes="href string:${context/absolute_url}/ajouter-un-gestionnaire-de-flotte"
        class="btn btn-primary"
        role="button">
         Ajouter un gestionnaire de flotte
@@ -75,7 +75,7 @@
                 </td>
                 <td class="text-center">
                     <nav class="menu-bouton">
-                        <a tal:attributes="href string:${context/portal_url}/administration-de-la-db/gestion-des-gestionnaires-de-flotte//modifier-un-gestionnaire-de-flotte?fleetManagerId=${fleetManager/_id}"
+                        <a tal:attributes="href string:${context/absolute_url}/modifier-un-gestionnaire-de-flotte?fleetManagerId=${fleetManager/_id}"
                            class="noborder"
                            alt="Modifier ce gestionnaire"
                            title="Modifier ce gestionnaire"
