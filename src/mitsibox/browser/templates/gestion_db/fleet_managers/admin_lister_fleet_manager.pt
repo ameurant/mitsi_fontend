@@ -23,6 +23,11 @@
     <i class="fas fa-ellipsis-v"></i>
     Liste des gestionnaires de flotte
 </h2>
+<div class="alert alert-info" role="alert">
+    <i class="fad fa-info-circle"></i>
+    Ce sont les personnes qui reçoivent des notifications sms lorsqu'une
+    boite reçoit son premier prélèvement après avoir été vidée.
+</div>
 <nav class="menu-bouton">
     <a href=""
        tal:attributes="href string:${context/portal_url}/administration-de-la-db/gestion-des-gestionnaires-de-flotte/ajouter-un-gestionnaire-de-flotte"
@@ -32,7 +37,7 @@
     </a>
 </nav>
 
-<div class="flex-box">  
+<div class="flex-box">
     <table border="1" class="listing">
         <thead>
             <tr>
@@ -57,7 +62,10 @@
                     <span tal:content="fleetManager/fleetManagerGsm" />
                 </td>
                 <td class="text-center">
-                    <span tal:content="fleetManager/fleetManagerSmsNotification" />
+                    <span tal:condition="exists: fleetManager/fleetManagerSmsNotification"
+                          tal:attributes="class python: fleetManager.fleetManagerSmsNotification=='True' and 'vert' or 'rouge'">
+                        <i class="fas fa-sms"></i>
+                    </span>
                 </td>
                 <td class="text-center">
                     <span tal:content="fleetManager/fleetManagerIdPlone" />
