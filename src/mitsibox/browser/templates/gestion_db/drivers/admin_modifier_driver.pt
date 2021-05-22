@@ -25,7 +25,7 @@
         </h2>
         <form action="updateDriver"
               method="post">
-              
+
             <div class="form-input">
                 <label for="driver-last-name">
                     Nom du chauffeur :
@@ -57,16 +57,25 @@
                 <label for="driver-sms-notification">
                     Notification SMS :
                 </label>
+                &nbsp;&nbsp;&nbsp;
                 Oui
                 <input type="radio"
                        name="driverSmsNotification"
                        id="driver-sms-notification"
-                       tal:attributes="value driver/driverSmsNotification" />
+                       value="True"
+                       tal:attributes="checked python:driver.driverSmsNotification == 'True' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Non
                 <input type="radio"
                        name="driverSmsNotification"
                        id="driver-sms-notification"
-                       value="False" />
+                       value="False"
+                       tal:attributes="checked python:driver.driverSmsNotification == 'False' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span tal:condition="exists: driver/driverSmsNotification"
+                      tal:attributes="class python: driver.driverSmsNotification =='True' and 'vert' or 'rouge'">
+                    <i class="fas fa-sms"></i>
+                </span>
             </div>
             <div class="form-input">
                 <label for="driver-id">

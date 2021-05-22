@@ -22,7 +22,7 @@
         </h2>
         <form action="insertDriver"
               method="post">
-              
+
             <div class="form-input">
                 <label for="driver-last-name">
                     Nom du chauffeur :
@@ -54,11 +54,13 @@
                 <label for="driver-sms-notification">
                     Notification SMS :
                 </label>
+                &nbsp;&nbsp;&nbsp;
                 Oui
                 <input type="radio"
                        name="driverSmsNotification"
                        id="driver-sms-notification"
                        value="" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Non
                 <input type="radio"
                        name="driverSmsNotification"
