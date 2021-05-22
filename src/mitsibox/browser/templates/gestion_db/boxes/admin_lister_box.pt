@@ -34,13 +34,14 @@
     </a>
 </nav>
 
-<div class="flex-box">  
+<div class="flex-box">
     <table border="1" class="listing">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Localisation</th>
                 <th>SSID Wifi</th>
+                <th>Alert Sms</th>
                 <th>Aduino</th>
                 <th>Tournée</th>
                 <th>QR-Code</th>
@@ -66,11 +67,17 @@
                         <span tal:content="myBox/localite" /><br />
 
                         <i class="fad fa-globe"></i>
-                        <span tal:content="myBox/lat" /> - 
+                        <span tal:content="myBox/lat" /> -
                         <span tal:content="myBox/long" /><br />
                     </td>
                     <td class="text-center">
                         <span tal:content="myBox/ssid" />
+                    </td>
+                    <td class="text-center">
+                        <span tal:condition="exists: myBox/alertsms"
+                              tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
+                            <i class="fas fa-sms"></i>
+                        </span>
                     </td>
                     <td class="text-center">
                         <span tal:condition="exists: myBox/arduino"
@@ -78,8 +85,12 @@
                     </td>
                      <td class="text-center">
                         <img src=""
+                             title=""
+                             alt=""
                              class="qr-code-50"
-                             tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
+                             tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
+                                             title string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
+                                             alt string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
                     </td>
                     <td class="text-center">
                         <talblock tal:condition="python: myRound is not None">

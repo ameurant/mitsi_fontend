@@ -17,7 +17,7 @@
                         labsView context/@@manageLabs;
                         allLabs labsView/getListingLabs;
                         myBox python: boxesView.getOneBoxById(idBox)">
-    
+
 
     <section class="formulaire">
         <h2>
@@ -45,7 +45,7 @@
                         </tal:boucle>
                   </select>
               </div>
-            
+
             <div class="form-input">
                 <label for="box-nom">
                     Nom la boite :
@@ -119,15 +119,28 @@
                        tal:attributes="value myBox/passwifi" />
             </div>
             <div class="form-input">
+                <label for="box-alert-sms">
+                    Alerte SMS :
+                </label>
+                oui <input type="radio"
+                           name="boxAlertSms"
+                           id="box-alert-sms"
+                           value="True" />
+                non <input type="radio"
+                           name="boxAlertSms"
+                           id="box-alert-sms"
+                           value="False" />
+            </div>
+            <div class="form-input">
                 <label for="box-arduino">
                     Arduino :
                 </label>
-                
+
                 <input type="text"
                        name="boxArduino"
                        id="box-arduino"
                        tal:attributes="value myBox/arduino " />
-                
+
             </div>
             <div class="formControls" align="center">
                 <input type="hidden"

@@ -40,7 +40,7 @@
                     </tal:boucle>
                 </select>
             </div>
-            
+
             <div class="form-input">
                 <label for="box-nom">
                     Nom la boite :
@@ -112,6 +112,29 @@
                        name="boxPassWifi"
                        id="box-pass-wifi"
                        value="" />
+            </div>
+            <div class="form-input">
+                <label for="box-alert-sms">
+                    Alerte SMS :
+                </label>
+                oui <input type="radio"
+                           name="boxAlertSms"
+                           id="box-alert-sms"
+                           value="True" />
+                non <input type="radio"
+                           name="boxAlertSms"
+                           id="box-alert-sms"
+                           value="False" />
+            </div>
+            <div class="form-input">
+                <label for="box-arduino">
+                    Arduino :
+                </label>
+                <input type="text"
+                       name="boxArduino"
+                       id="box-arduino"
+                       value="" />
+
             </div>
             <div class="formControls" align="center">
                 <input type="submit"
