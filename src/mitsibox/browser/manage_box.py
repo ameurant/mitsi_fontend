@@ -45,7 +45,7 @@ class ManageBox(ConnexionDb):
         filtre = "_id in {0}".format(list(i.encode() for i in idBoxList))
 
         tablesBoxes = self.getLabDbAccessCollection('mitsibox_boxes')
-        recs = tablesBoxes.find(filtre).fields('_id', 'name', 'address', 'cp', 'localite', 'lat', 'long').execute()
+        recs = tablesBoxes.find(filtre).fields('_id', 'name', 'address', 'cp', 'localite', 'lat', 'long', 'deposit_count').execute()
         allBoxes = recs.fetch_all()
         return allBoxes
 
