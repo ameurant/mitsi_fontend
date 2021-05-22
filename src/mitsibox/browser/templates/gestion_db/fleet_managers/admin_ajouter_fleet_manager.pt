@@ -16,16 +16,17 @@
     <section class="formulaire">
         <h2>
             <i class="fas fa-ellipsis-v"></i>
-            Ajouter un gestionnaire de flotte
+            Ajouter un fleet manager
         </h2>
-        <p>
-            Cet écran permet de selectionner la personne qui reçoit
+        <div class="alert alert-info" role="alert">
+            <i class="fad fa-info-circle"></i>
+            Cet écran permet de selectionner la ou les personnes qui reçoivent
             une notification SMS quand une boite reçoit une premier
-            prélèvement
-        </p>
+            prélèvement.
+        </div>
         <form action="insertFleetManager"
               method="post">
-              
+
             <div class="form-input">
                 <label for="fleet-manager-last-name">
                     Nom :
@@ -66,16 +67,18 @@
                 <label for="fleet-manager-sms-notification">
                     Notification SMS :
                 </label>
+                &nbsp;&nbsp;&nbsp;
                 Oui
                 <input type="radio"
                        name="fleetManagerSmsNotification"
                        id="fleet-manager-sms-notification"
                        value="True" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Non
                 <input type="radio"
                        name="fleetManagerSmsNotification"
                        id="fleet-manager-sms-notification"
-                       value="Flase" />
+                       value="False" />
             </div>
             <div class="form-input">
                 <label for="fleet-manager-id">
