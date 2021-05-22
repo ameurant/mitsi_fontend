@@ -15,16 +15,12 @@ bleu fonce : #2662ac  rgb(28, 98, 172)
 @import url('https://fonts.googleapis.com/css2?family=Monda&display=swap');
 
 
-html, body {
+html,
+body {
     height:100% !important;
-}
-
-body{
     font-family: 'Monda', sans-serif;
-    font-size:12px;
-}
-
-
+    font-size: 14px;
+ }
 
 /*** GLYPHE ***/
 
@@ -41,7 +37,6 @@ body{
     content:"\f085";
     font-size:14px;
 }
-
 .fa-stack {
     position: relative;
     display:block;
@@ -50,21 +45,21 @@ body{
     line-height: 43px;
 }
 .fa-lg {
-    line-height: .75em;
+    line-height: 1.75rem;
 }
 .fa-bars::after{
     content: '\f0c9';
 }
-
 .fa-exclamation-triangle::before{
     content: '\f071';
 }
-
 .fa-ellipsis-v{
-    font-size:0.8em;
+    font-size:1.8rem;
     padding-right:10px;
 }
-
+.fa-sms{
+    font-size:1.8rem;
+}
 
 
 .box{
@@ -131,7 +126,7 @@ a.noborder{
     color:#005b76;
 }
 .status-bleu-deep-sleep{
-    color:#002d3a;   
+    color:#002d3a;
 }
 .power-black{
     color:#252a33;
@@ -199,7 +194,7 @@ h2{
     height:32px;
     padding:8px 4px 2px 4px;
     text-align:center;
-    font-size:15px;
+    font-size:1rem;
 }
 
 .menu-bouton i.bouton-nav:hover{
@@ -352,9 +347,9 @@ h2{
     width:100%;
 }
 
-#map-mitsiboxes { 
+#map-mitsiboxes {
     width:100%;
-    height:600px; 
+    height:600px;
 }
 
 
