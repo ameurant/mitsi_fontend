@@ -11,15 +11,15 @@
             tal:define="idBox request/idBox;
                         labsView context/@@manageLabs;
                         roundsView context/@@manageRounds;
-                        boxesView context/@@displayBox; 
+                        boxesView context/@@displayBox;
                         myBox python:boxesView.getOneBox(idBox)">
 
 
-    <div class="flex-box justify-content-center">    
+    <div class="flex-box justify-content-center">
         <section class="box">
             <div>
                 <h2 id=""
-                    tal:attributes="id string:box-name" 
+                    tal:attributes="id string:box-name"
                     class="data-box"
                     tal:content="myBox/name"></h2>
             </div>
@@ -31,9 +31,9 @@
                     </span>
                     <span tal:condition="python: myBox.deposit_count < 5">
                         <i class='fas fa-vials vert'></i>
-                    </span>                    
+                    </span>
                     <span id=""
-                          tal:attributes="id string:box-deposit-count" 
+                          tal:attributes="id string:box-deposit-count"
                           class="data-box"
                           tal:condition="exists: myBox/deposit_count"
                           tal:content="myBox/deposit_count" />
@@ -47,7 +47,7 @@
                         <i class='fas fa-thermometer-full vert'></i>
                     </span>
                     <span id=""
-                          tal:attributes="id string:box-last-temp" 
+                          tal:attributes="id string:box-last-temp"
                           class="data-box"
                           tal:condition="exists: myBox/last_temp"
                           tal:content="myBox/last_temp" />
@@ -56,7 +56,7 @@
                     <!--Humidité-->
                     <i class="fas fa-tint bleu-glyphe"></i>
                     <span id=""
-                          tal:attributes="id string:box-last-humidity" 
+                          tal:attributes="id string:box-last-humidity"
                           class="data-box"
                           tal:condition="exists: myBox/last_humidity"
                           tal:content="myBox/last_humidity" />
@@ -66,37 +66,37 @@
                     <tal:block tal:define="batteryStatus myBox/battery_status;
                                            infoBattery python:boxesView.splitStatusBatteryBox(batteryStatus)">
                         <div tal:condition="python: infoBattery[0]=='GOOD'"
-                              data-toggle="tooltip" 
+                              data-toggle="tooltip"
                               title=""
                               tal:attributes="title python: infoBattery[1]"
                               class="vert pat-tooltip">
                             <i class="fad fa-battery-full  battery"></i>
                         </div>
                         <div tal:condition="python: infoBattery[0]=='OK'"
-                             data-toggle="tooltip" 
+                             data-toggle="tooltip"
                              title=""
                              tal:attributes="title python: infoBattery[1]"
                              class=" orange pat-tooltip">
                             <i class="fad fa-battery-half battery"></i>
                         </div>
                         <div tal:condition="python: infoBattery[0]=='LOW'"
-                             data-toggle="tooltip" 
+                             data-toggle="tooltip"
                              title=""
                              tal:attributes="title python: infoBattery[1]"
                              class=" rouge pat-tooltip">
                             <i class="fad fa-battery-quarter battery"></i>
                         </div>
-                        
+
                     </tal:block>
                 </div>
             </h3>
             <hr />
-            
+
             <div class="flex-box flex-justify-content-space-between">
                 <div class="address-box">
                     <i class="fas fa-map-marker-alt"></i>
                     <span id=""
-                          tal:attributes="id string:box-address" 
+                          tal:attributes="id string:box-address"
                           class="data-box"
                           tal:condition="exists: myBox/address"
                           tal:content="myBox/address"></span>
@@ -104,26 +104,26 @@
                 <div>
                     <i class="fas fa-globe"></i>
                     <span id=""
-                          tal:attributes="id string:box-lat" 
+                          tal:attributes="id string:box-lat"
                           class="data-box"
                           tal:condition="exists: myBox/long"
                           tal:content="myBox/long" />
                     -
                     <span id=""
-                          tal:attributes="id string:box-long" 
+                          tal:attributes="id string:box-long"
                           class="data-box"
                           tal:condition="exists: myBox/lat"
                           tal:content="myBox/lat" />
                 </div>
             </div>
             <hr />
-            
+
             <div class="flex-box flex-justify-content-space-between">
                 <div>
                     <div>
                         <span class="label-box">Premier dépôt :</span><br />
                         <span id=""
-                              tal:attributes="id string:box-first-deposit" 
+                              tal:attributes="id string:box-first-deposit"
                               class="data-box date-box"
                               tal:condition="exists: myBox/first_deposit"
                               tal:content="myBox/first_deposit" />
@@ -131,7 +131,7 @@
                     <div>
                         <span class="label-box">Dernier dépôt :</span><br />
                         <span id=""
-                              tal:attributes="id string:box-last-deposit" 
+                              tal:attributes="id string:box-last-deposit"
                               class="data-box date-box"
                               tal:condition="exists: myBox/last_deposit"
                               tal:content="myBox/last_deposit" />
@@ -141,16 +141,16 @@
                     <div>
                         <span class="label-box">Dernier relevé :</span><br />
                         <span id=""
-                              tal:attributes="id string:box-last-relief" 
+                              tal:attributes="id string:box-last-relief"
                               class="data-box date-box"
                               tal:condition="exists: myBox/last_relief"
                               tal:content="myBox/last_relief" />
                     </div>
-                    
+
                     <div>
                         <span class="label-box">Dernière mise à jour :</span><br />
                         <span id=""
-                              tal:attributes="id string:box-last-update" 
+                              tal:attributes="id string:box-last-update"
                               class="data-box date-box"
                               tal:condition="exists: myBox/last_update"
                               tal:content="myBox/last_update" />
@@ -163,17 +163,17 @@
                     <div id=""
                          tal:attributes="id string:icone-front-door"><!--imgjs--></div>
                     <span id=""
-                          tal:attributes="id string:box-door-status" 
+                          tal:attributes="id string:box-door-status"
                           class="data-box discret"
                           tal:condition="exists: myBox/door_status"
                           tal:content="myBox/door_status" />
                 </div>
-                
+
                 <div>
                     <div id=""
                          tal:attributes="id string:icone-top-door"><!--imgjs--></div>
                     <span id=""
-                          tal:attributes="id string:box-top-status" 
+                          tal:attributes="id string:box-top-status"
                           class="data-box discret"
                           tal:condition="exists: myBox/top_status"
                           tal:content="myBox/top_status" />
@@ -187,7 +187,7 @@
                                      myLab python:labsView.getLabsById(idLab)">
                         <span class="label-box discret">Labo :</span>
                         <span id=""
-                              tal:attributes="id string:box-lab_id" 
+                              tal:attributes="id string:box-lab_id"
                               class="data-box discret"
                               tal:content="myLab/name" />
                     </div>
@@ -225,24 +225,24 @@
                         <!--<span tal:content="myBox/status" />-->
                         <span tal:condition="python: myBox.status=='Active'">
                             <i class="fad fa-monitor-heart-rate pat-tooltip status-bleu-active"
-                               data-toggle="tooltip" 
+                               data-toggle="tooltip"
                                title=""
                                tal:attributes="title myBox/status"></i>
                         </span>
                         <span tal:condition="python: myBox.status=='Light-Sleep'">
                             <i class="fad fa-monitor-heart-rate pat-tooltip status-bleu-ligth-sleep"
-                               data-toggle="tooltip" 
+                               data-toggle="tooltip"
                                title=""
                                tal:attributes="title myBox/status"></i>
                         </span>
                         <span tal:condition="python: myBox.status=='Deep-Sleep'">
                             <i class="fad fa-monitor-heart-rate pat-tooltip status-bleu-deep-sleep"
-                               data-toggle="tooltip" 
+                               data-toggle="tooltip"
                                title=""
                                tal:attributes="title myBox/status"></i>
                         </span>
                     </div>
-                    <nav class="menu-bouton">  
+                    <nav class="menu-bouton">
                         <a tal:attributes="href string:${context/portal_url}/gestion-des-boites/modifier-une-mitsibox?idBox=${myBox/_id}"
                            class="noborder pat-tooltip"
                            alt="Modifier cette mitisbox"
