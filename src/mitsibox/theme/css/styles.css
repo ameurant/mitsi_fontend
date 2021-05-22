@@ -60,6 +60,14 @@ body {
 .fa-sms{
     font-size:1.8rem;
 }
+.fa-info-circle{
+    display:inline-block;
+    position:relative;
+    top:4px;
+    font-size:1.8rem;
+    margin-right: 8px;
+}
+
 
 
 .box{
