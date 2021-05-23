@@ -51,11 +51,11 @@
                       class="data-box-level2" /> km
             </div>
         </div>
-        <div class="card-body text-secondary flex-box flex-justify-content-space-between">
+        <div class="card-body text-secondary d-flex justify-content-center flex-wrap">
             <tal:block tal:define="allBoxes myRound/roundMitsiboxList">
                 <tal:boucle tal:repeat="idBox allBoxes">
                     <tal:boxe tal:define="myBox python:boxView.getOneBoxById(idBox)">
-                        <div class="box-round-listing flex-item ">
+                        <div class="box-round-listing flex-shrink-0">
                             <div>
                                 <span tal:content="myBox/name"
                                       class="box-round-listing-orange" />
