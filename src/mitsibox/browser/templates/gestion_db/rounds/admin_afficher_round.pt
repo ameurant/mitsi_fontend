@@ -28,74 +28,72 @@
         Information sur la tournée : <em>${myRound/roundName}</em>
     </h2>
 
-    <div id="box-tournee">
-        <section class="section-donnee">
-            <div class="section-donnee-box-flex">
-                <div id="section-donnee-info-round"
-                     class="section-donnee-box">
-                    Type de la tournée :
-                    <span tal:content="myRound/roundType"
-                          class="form-input-data" /><br />
-                    Heure de départ :
-                    <span tal:content="myRound/roundStartTime"
-                          class="form-input-data" /><br />
-                    Durée estimée :
-                    <span tal:content="myRound/roundEstimedTime"
-                          class="form-input-data" /><br />
-                    Chauffeur :
-                    <span tal:content="myDriver/firstName"
-                          class="form-input-data" />
-                    <span tal:content="myDriver/lastName"
-                          class="form-input-data" /><br />
-                    Distance estimée :
-                    <span tal:content="myRoundDistance"
-                          class="form-input-data" /> km<br />
+    <section class="section-carte">
+        <div id="map-mitsiboxes"></div>
+    </section>
+
+    <section id="section-box-scroll"
+             class="d-flex flex-row flex-nowrap justify-content-start">
+
+        <div id="section-donnee-info-round"
+             class="section-donnee-box flex-shrink-0 bleu-fonce">
+            <div>
+                <span tal:content="myRound/roundName"
+                      class="blanc" />
+            </div>
+            Type de la tournée :
+            <span tal:content="myRound/roundType"
+                  class="blanc" /><br />
+            Heure de départ :
+            <span tal:content="myRound/roundStartTime"
+                  class="blanc" /><br />
+            Durée estimée :
+            <span tal:content="myRound/roundEstimedTime"
+                  class="blanc" /><br />
+            Chauffeur :
+            <span tal:content="myDriver/firstName"
+                  class="blanc" />
+            <span tal:content="myDriver/lastName"
+                  class="blanc" /><br />
+            Distance estimée :
+            <span tal:content="myRoundDistance"
+                  class="blanc" /> km<br />
+        </div>
+
+        <tal:boucle tal:repeat="myBox allBoxes">
+            <div class="box-round-listing flex-shrink-0"
+                 tal:define="idBox myBox/_id">
+                <div>
+                    <span tal:content="myBox/name"
+                          class="orange" />
+                </div>
+                <div>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span tal:content="myBox/address" />
+                    <br />
+                    <span tal:content="myBox/cp" /> <span tal:content="myBox/localite" />
+                    <br />
+                    <i class="fas fa-globe"></i>
+                    <span tal:content="myBox/lat" />
+                    <br />
+                    <span tal:content="myBox/long" />
+                    <figure class="qr-code-50">
+                        <img src=""
+                             tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
+                    </figure>
+                </div>
+                <div>
+                    <tal:if tal:condition="exists: myBox/deposit_count">
+                        Prélèvements :
+                        <span id=""
+                              tal:attributes="id string:box-deposit-count"
+                              class="box-round-listing-bleu"
+                              tal:content="myBox/deposit_count" />
+                    </tal:if>
                 </div>
             </div>
-            <div class="form-input">
-                <tal:boucle tal:repeat="myBox allBoxes">
-                    <div class="section-donnee-box-flex">
-                        <div class="box-round-listing section-donnee-box"
-                             tal:define="idBox myBox/_id">
-                            <div>
-                                <span tal:content="myBox/name"
-                                      class="orange" />
-                            </div>
-                            <div>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span tal:content="myBox/address" />
-                                <br />
-                                <span tal:content="myBox/cp" /> <span tal:content="myBox/localite" />
-                                <br />
-                                <i class="fas fa-globe"></i>
-                                <span tal:content="myBox/lat" />
-                                <br />
-                                <span tal:content="myBox/long" />
-                                <figure class="qr-code-50">
-                                    <img src=""
-                                         tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
-                                </figure>
-                            </div>
-                            <div>
-                                <tal:if tal:condition="exists: myBox/deposit_count">
-                                    Prélèvements :
-                                    <span id=""
-                                          tal:attributes="id string:box-deposit-count"
-                                          class="box-round-listing-bleu"
-                                          tal:content="myBox/deposit_count" />
-                                </tal:if>
-                            </div>
-                        </div>
-                    </div>
-                </tal:boucle>
-            </div>
-        </section>
-
-        <section class="section-carte">
-            <div id="map-mitsiboxes"></div>
-        </section>
-    </div>
-
+        </tal:boucle>
+    </section>
 
 <script>
 require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
