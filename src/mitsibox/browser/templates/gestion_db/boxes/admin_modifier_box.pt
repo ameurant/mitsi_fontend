@@ -122,14 +122,25 @@
                 <label for="box-alert-sms">
                     Alerte SMS :
                 </label>
+                &nbsp;&nbsp;&nbsp;
                 oui <input type="radio"
                            name="boxAlertSms"
                            id="box-alert-sms"
-                           value="True" />
+                           value="True"
+                           checked=""
+                           tal:attributes="checked python: myBox.alertsms == 'True' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 non <input type="radio"
                            name="boxAlertSms"
                            id="box-alert-sms"
-                           value="False" />
+                           value="False"
+                           checked=""
+                           tal:attributes="checked python: myBox.alertsms == 'False' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span tal:condition="exists: myBox/alertsms"
+                      tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
+                    <i class="fas fa-sms"></i>
+                </span>
             </div>
             <div class="form-input">
                 <label for="box-arduino">
