@@ -1,0 +1,45 @@
+SELECT
+    time_stamp AS "time",
+    (select count(*) from mitsibox_top_events as t1 where t1.box_id=a.box_id AND time_stamp between meh AND a.time_stamp  and value='OPEN') events,
+    doc->>"$.arduino" AS metric
+FROM
+    (select *, last_value(time_stamp)
+OVER
+    (PARTITION BY box_id,value order by time_stamp desc ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING ) meh
+from
+    mitsibox_frontdoor_events
+where
+    value='OPEN'
+order by
+    time_stamp desc) a   JOIN mitsibox_boxes ON _id=box_id WHERE time_stamp BETWEEN '2021-03-24' AND now()
+order by time;
+
+
+
++---------------------+--------+--------+
+| time                | events | metric |
++---------------------+--------+--------+
+| 2021-03-24 08:55:54 |      0 | BOX02  |
+| 2021-03-24 11:32:26 |      0 | BOX02  |
+| 2021-03-24 12:40:47 |      0 | BOX02  |
+| 2021-03-24 13:04:39 |      2 | BOX02  |
+| 2021-03-24 13:50:26 |      3 | BOX02  |
+| 2021-03-24 18:32:08 |      0 | BOX02  |
+| 2021-03-25 00:54:16 |      0 | BOX02  |
+| 2021-03-25 07:38:03 |      0 | BOX02  |
+| 2021-03-25 07:59:49 |      0 | BOX02  |
+| 2021-03-25 08:00:04 |      0 | BOX02  |
+| 2021-03-25 10:49:46 |      0 | BOX02  |
+| 2021-03-25 13:20:42 |      1 | BOX06  |
+| 2021-03-25 13:20:44 |      0 | BOX06  |
+| 2021-03-25 13:21:27 |      0 | BOX06  |
+| 2021-03-25 14:32:59 |      0 | BOX02  |
+| 2021-03-25 16:08:52 |      0 | BOX02  |
+| 2021-03-25 19:36:38 |      0 | BOX02  |
+| 2021-03-26 10:19:52 |      0 | BOX02  |
+| 2021-03-26 11:58:41 |      5 | BOX09  |
+| 2021-03-26 12:02:30 |      1 | BOX09  |
++---------------------+--------+--------+
+
+
+combien de depot dans la boite lors de chaque ouverture de la porte de devant
