@@ -19,38 +19,46 @@
     <i class="fas fa-ellipsis-v"></i>
     Liste des collectes effectuées par les chauffeurs
 </h2>
+<span class="badge bg-warning text-dark">mitsibox_collect_history</span>
 <table border="1" 
        class="listing">
         <thead>
             <tr>
-                <th>Boite</th>
-                <th>Prélèvement</th>
-                <th>Chauffeur</th>
                 <th>Tournée</th>
-                <th>Commentaire</th>
+                <th>Chauffeur</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>EndDate</th>
+                <th>status</th>
+                <th>labo_comment</th>
+                <th>samples_total_labo</th>
             </tr>
         </thead>
         <tal:boucle tal:repeat="myCollection allCollections">
                 <tr>
-                    <td tal:define="idBox myCollection/box_id;
-                                    myBox python: boxesView.getOneBoxById(idBox)"
-                        class="text-center">
-                        <span tal:content="myBox/name" />
-                    </td>
                     <td class="text-center">
-                        <span tal:content="myCollection/samples_total" />
+                        <span tal:content="myCollection/round_id" />
                     </td>
                     <td class="text-center">
                         <span tal:content="myCollection/driver_id" />
                     </td>
-                    <td tal:define="idRound myCollection/round_id;
-                                    myRound python: roundsView.getRoundById(idRound)"
-                        class="text-center">
-                        <span tal:content="myRound/roundName" />
-
+                    <td class="text-center">
+                        <span tal:content="myCollection/start_date" />
                     </td>
                     <td class="text-center">
-                        <span tal:content="myCollection/collect_comment" />
+                        <span tal:content="myCollection/end_date" />
+                    </td>
+                    <td class="text-center">
+                        <span tal:content="myCollection/status" />
+                    </td>
+                    <td class="text-center">
+                        <span tal:content="myCollection/employee_id" />
+                    </td>
+                    <td class="text-center">
+                        <span tal:content="myCollection/labo_comment" />
+                    </td>
+                    <td class="text-center">
+                        <span tal:content="myCollection/samples_total_labo" />
                     </td>
                 </tr>
         </tal:boucle>
@@ -58,4 +66,3 @@
 </metal:main>
 </body>
 </html>
-
