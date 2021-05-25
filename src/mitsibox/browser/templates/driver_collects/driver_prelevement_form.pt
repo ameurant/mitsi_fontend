@@ -12,11 +12,11 @@
            tal:define="dummy python:request.set('disable_border',1)" />
 
 <metal:main fill-slot="content-core"
-            tal:define="idBox string:00005ecb95df0000000000000010;
+            tal:define="idBox string:00005ecb95df000000000000000c;
+                        idRound string:00006011b7d00000000000000035;
                         commonView context/@@manageCommon;
                         boxesView context/@@manageBox;
                         idDriver commonView/getUserAuthenticated; 
-                        idRound string:00005f0d88fe0000000000000018;
                         myBox python:boxesView.getOneBoxById(idBox)">
 
     <section class="formulaire">
@@ -28,7 +28,7 @@
             collecte-des-boites?idBox=<span tal:content="idBox" />
         </span>
         <br />
-        <span class="discret"> 
+        <span class="discret">
             ==> <span tal:content="user" />
         </span>
         <form action="insertCollectionByDriver"
@@ -53,11 +53,11 @@
                        placholder="Nombre de colis" />
             </div>
             <div class="form-input">
-                <label for="collect-comment">
+                <label for="collect-box-driver-comment">
                     Commentaire :
                 </label>
-                <textarea name="collectComment"
-                          id="collect-comment"
+                <textarea name="collectBoxDriverComment"
+                          id="collect-box-driver-comment"
                           placholder="Commentaire éventuel" />
             </div>
             <div class="formControls" align="center">
