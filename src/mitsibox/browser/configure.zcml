@@ -142,11 +142,21 @@
         allowed_interface=".interfaces.IManageDisplayBox"
         />
 
+
+<!-- RECEPTION LABO -->
     <browser:page
         name="reception-tournee-par-le-labo"
         for="*"
         class=".manage_collections.ManageCollections"
         template="templates/control_center/lab_reception_round.pt"
+        permission="zope2.View"
+        allowed_interface=".interfaces.IManageCollections"
+        />
+    <browser:page
+        name="receptionCollectByLabo"
+        for="*"
+        class=".manage_collections.ManageCollections"
+        attribute="receptionCollectByLabo"
         permission="zope2.View"
         allowed_interface=".interfaces.IManageCollections"
         />
