@@ -20,18 +20,19 @@ class ManageCollections(ConnexionDb):
 
     def getAllCollections(self):
         """
-        Récupères les collectes de saclots 
+        Récupères les collectes de saclots
         table mitsibox_collect_history
         """
         tableCollections = self.getLabDbAccessTable('mitsibox_collect_history')
         recs = tableCollections.select().execute()  # cas d'une table
         myCollections = recs.fetch_all()
+        print "myCollections : %s" % (myCollections,)
         return myCollections
 
     def getAllSamplesFormBox(self, boxId):
         """
         table mitsibox_samples
-        récupères tous les samples qui ont été déposés dans uen boite
+        récupères tous le total qui ont été déposés dans une boite
         et dont le statut est INBOX
         """
         collectSamples = self.getLabDbAccessCollection('mitsibox_samples')
@@ -39,53 +40,50 @@ class ManageCollections(ConnexionDb):
         mySamples = recs.fetch_all()
         return mySamples
 
-    def getCollectionId(self, roundId):
+    def getCollectionHistoryId(self, roundId):
         """
         table mitsibox_collect_history
         Vérifie si à la date courante il existe déjà une
         instance de la collection
-            Si oui retourner l'id
-            Si non créer l'instance de la collection
+            Si oui retourner l'id ce cette collecte
+                (tournée en cours pour ce chauffeur)
+            Si non créer une nouvelle instance de collecte
+                (une nouvlle tournée pour ce chauffeur)
         """
         drivers = getMultiAdapter((self.context, self.request), name="manageDrivers")
-        
-        db = self.getLabDbAccess()
+
+        db = self.getLabDbAccessTable('mitsibox_collect_history')
         request = db.session.sql("""
                                  select
                                      id
                                  from
                                      mitsi_chuhautesenne.mitsibox_collect_history
                                  where
-                                     round_id = '00005ecb95df0000000000000010'
+                                     round_id = '%s'
                                      and
-                                     status='ACTIVE'
+                                     status_collect='ACTIVE'
                                      and start_date >= curdate();
-                                 """).execute()
+                                 """ % (roundId,)).execute()
         result = request.fetch_one()
-        print "result : %s" % (result,)
 
         if (result is None):
-            "inserer le round_id, le driver_id status a ACTIVE"
-            round_id = roundId
-            driver_id = drivers.getIdDriverByIdRound(roundId)
-            print ("driverId : %s") % (driver_id,)
-            status = "ACTIVE"
+            driverId = api.user.get_current()
+            statusCollect = "ACTIVE"
             request = db.session.sql("""
-                                     insert into mitsi_chuhautesenne.mitsibox_collect_history
-                                        (round_id,
-                                        driver_id,
-                                        status)
-                                     values
-                                        (%s, %s, %s)""" % (round_id, driver_id, status)).execute()
-            request = session.sql("select last_insert_id()").execute()
-            collectHistoryId = request.fetch_one()[0]
-            print "getCollectionId"
-            print "collectHistoryId : %s" % (collectHistoryId,)
-            return collectHistoryId
+                                       insert into mitsi_chuhautesenne.mitsibox_collect_history
+                                          (round_id,
+                                           driver_id,
+                                           status_collect)
+                                       values
+                                          ('%s', '%s', '%s')""" % (roundId, driverId, statusCollect)).execute()
+
+            request.get_autoincrement_value()  # recupère la clé qui vient d'être insérée
+
+            lastCollectHistoryId = request.get_autoincrement_value()
+            return lastCollectHistoryId
         else:
-            print "getCollectionId"
-            print "collectHistoryId : %s" % (result.id,)
-            return result.id
+            lastCollectHistoryId = result["id"]
+            return lastCollectHistoryId
 
     def insertCollectionByDriver(self):
         """
@@ -93,40 +91,22 @@ class ManageCollections(ConnexionDb):
         table mitsibox_collect_box_history
         """
         fields = self.request.form
-        boxId = fields.get('boxId', None)
-        roundId = fields.get('boxId', None)
-        samplesTotal = fields.get('totalSaclots', None)
-        collectBoxComment = fields.get('collectBoxComment', None)
-        status = "INBOX"
-        boxId = "00005f0d88fe0000000000000018"
+        idBox = fields.get('idBox', None)
+        idDriver = fields.get('idDriver', None)
+        idRound = fields.get('idRound', None)
+        totalSamplesCollect = fields.get('totalSaclots', None)
+        collectBoxDriverComment = fields.get('collectBoxDriverComment', None)
+        statusCollect = "INBOX"
 
-        mySamples = self.getAllSamplesFormBox(boxId)
-        print "mySamples : %s" % (mySamples,)
-        # print "mySamples Id : %s" % (mySamples[0]['_id'],)
+        mySamples = self.getAllSamplesFormBox(idBox)
+        print "MySamples : %s" % (mysamples,)
 
-        collectHistoryId = self.getCollectionId(roundId)
-        print "collectHistoryId : %s" % (collectHistoryId,)
-
-        #self.updateStatusSamples(boxId, status)
-        #self.insertSamples(boxId, status)
-
-
-        #self.getCollectionId(roundId)
-
-
+        collectHistoryId = self.getCollectionHistoryId(idRound)
 
         # ouverture de la connexion
         session = self.getConnexion()
         db = session.get_schema("mitsi_chuhautesenne")
 
-        # recupe des deux tables
-        tableCollectHistory = db.get_table('mitsibox_collect_history')
-        tableCollectBoxHistory = db.get_table('mitsibox_collect_box_history')
-
-        # Insertion dans la table tableCollectHistory
-        # tableCollectHistory = self.getLabDbAccessTable('mitsibox_collect_history')
-        #tableCollectHistory.insert(['round_id', 'driver_id', 'box_id', 'samples_total', 'collect_comment', 'status']).values(round_id, driver_id, box_id, samples_total, collect_comment, status).execute()
-        #session.commit()
 
         # recup du dernier _id qui vient d'être inséré
         #request = session.sql("select last_insert_id()").execute()
@@ -135,15 +115,16 @@ class ManageCollections(ConnexionDb):
         #print "box_id : %s" % (box_id,)
 
         # Insertion dans la table tableCollectBoxHistory
-        # tableCollectBoxHistory = self.getLabDbAccessTable('mitsibox_collect_box_history')
-        #tableCollectBoxHistory.insert(['collect_history_id', 'box_id', 'collect_box_comment']).values(collect_history_id, box_id, collect_box_comment).execute()
-        #session.commit()
+        # lorsqu'un chauffeur recupère les saclots d'une boite
+        tableCollectBoxHistory = self.getLabDbAccessTable('mitsibox_collect_box_history')
+        tableCollectBoxHistory.insert(['collect_history_id', 'box_id', 'collect_box_driver_comment', 'collect_box_driver_samples_total']).values(collectHistoryId, idBox, collectBoxDriverComment, totalSamplesCollect).execute()
+        session.commit()
 
         portalUrl = getToolByName(self.context, 'portal_url')()
         ploneUtils = getToolByName(self.context, 'plone_utils')
         message = u"La collecte est enregistrée."
         ploneUtils.addPortalMessage(message, 'info')
-        url = "%s/collecte-des-boites" % (portalUrl,)
+        url = "%s/driver-form" % (portalUrl,)
         self.request.response.redirect(url)
         return ''
 
@@ -171,31 +152,63 @@ class ManageCollections(ConnexionDb):
         url = "%s/collecte-des-boites" % (portalUrl,)
         self.request.response.redirect(url)
         return ''
- 
-    def insertSamples(self, boxId, status):
+
+    def insertSamples(self, idBox, status):
         """
-        ajouter chaque sample prélever dans une boite 
+        /!\ ne sert que pour les RFID
+        ajouter chaque sample prélevé dans une boite
         dans la table mitsibox_sample_events avec son statut à TRANSIT
         table mitsibox_sample_events
         """
         collectionsSample = self.getLabDbAccessTable('mitsibox_sample_events')
 
-        mySamples = self.getAllSamplesFormBox(boxId)
+        mySamples = self.getAllSamplesFormBox(idBox)
         for i in range(len(mySamples)):
-            collectionsSample.insert(['sample_id', 'box_id', 'status']).values(mySamples[i]['_id'], boxId, status).execute()
+            collectionsSample.insert(['sample_id', 'box_id', 'status']).values(mySamples[i]['_id'], idBox, status).execute()
 
 
-    def updateStatusSamples(self, boxId, status):
+    def updateStatusSamples(self, idBox, status):
         """
+        /!\ ne sert que pour les RFID
         table mitsibox_samples
         mettre à jour les samples d'une box au moment
-        où ils sont prélevés par le driver
-        Satut INBOX TRANSIT PENDING LABO
+        où ils sont
+            - prélevés par le driver     ==> TRANSIT
+            - réceptionnés par le labo   ==> LABO
+        Satut INBOX TRANSIT LABO
         """
         collectSamples = self.getLabDbAccessCollection('mitsibox_samples')
-        request = collectSamples.modify((("box_id='%s' and status='TRANSIT'") % (boxId,))).set("status", "%s" % (status,)).execute()
+        request = collectSamples.modify((("box_id='%s' and status='TRANSIT'") % (idBox,))).set("status", "%s" % (status,)).execute()
 
-        
+
+    def receptionCollectByLabo(self):
+        """
+        table mitsibox_collect_history
+        Mise a jour des données d'une collect lorsque le driver arrive au labo.
+        L'employé encode le nombre de prélèvement ramené par le chauffeur
+        La end_date est insrée (moment de la fin de la collecte)
+        Le status_collect passe à DONE (fin e la collecte)
+        """
+        fields = self.request.form
+        idDriver = fields.get('idDriver', None)
+        idRound = fields.get('idRound', None)
+        idEmployeLab = fields.get('idEmployeLab', None)
+        commentairEmploye = fields.get('commentairEmploye', None)
+        nbrePrelevementRemis = fields.get('totalSaclots', None) or O
+
+        statusCollect = "DONE"
+
+        tableCollectHistory = self.getLabDbAccessTable('mitsibox_collect_history')
+        tableCollectHistory.modify(['en_date', 'status_collect', 'employe_id', 'labo_comment', 'samples_total_labo' ]).values(endDate, statusCollect, idEmployeLab, commentairEmploye, nbrePrelevementRemis).execute()
+        session.commit()
+
+        portalUrl = getToolByName(self.context, 'portal_url')()
+        ploneUtils = getToolByName(self.context, 'plone_utils')
+        message = u"La collecte est enregistrée."
+        ploneUtils.addPortalMessage(message, 'info')
+        url = "%s/reception-dune-tournee" % (portalUrl,)
+        self.request.response.redirect(url)
+        return ''
 
 
 
