@@ -28,7 +28,6 @@ class ManageCollections(ConnexionDb):
         myCollections = recs.fetch_all()
         return myCollections
 
-
     def getAllSamplesFormBox(self, idBox):
         """
         table mitsibox_samples
@@ -191,27 +190,25 @@ class ManageCollections(ConnexionDb):
 
         collectHistoryId = self.getCollectionHistoryId(idRound)
         print "===> MYCOLLECTID : %s" % (collectHistoryId,)
+        print "===> IDROUND : %s" % (idRound,)
 
-        myCollection = {}
-        myCollection['status_collect'] = "DONE"
-        myCollection['employe_id'] = fields.get('idEmployeLab', None)
-        myCollection['labo_comment'] = fields.get('commentairEmploye', None)
-        myCollection['samples_total_labo'] = fields.get('totalSaclots', None) or 0
+        status_collect = "DONE"
+        employee_id = fields.get('idEmployeLab', None)
+        labo_comment = fields.get('commentairEmploye', None)
+        samples_total_labo = fields.get('totalSaclots', None) or 0
 
         tableCollectHistory = self.getLabDbAccessTable('mitsibox_collect_history')
-
-        # XXXXXXXXXXXXXXXXXXXX
-        tableCollectHistory.update(("_id='%s'" % collectHistoryId).set(myCollection)).execute()
+        tableCollectHistory.update().set("status_collect", status_collect).set("employee_id", employee_id).set("labo_comment", labo_comment).set("samples_total_labo", samples_total_labo).where("round_id= '%s'" % idRound).execute()
 
         portalUrl = getToolByName(self.context, 'portal_url')()
         ploneUtils = getToolByName(self.context, 'plone_utils')
         message = u"La collecte est enregistrée."
         ploneUtils.addPortalMessage(message, 'info')
-        url = "%s/reception-dune-tournee" % (portalUrl,)
+        url = "%s/centre-de-controle/reception-tournee-par-le-labo" % (portalUrl,)
         self.request.response.redirect(url)
         return ''
 
-
+        # update mitsibox_collect_history set status_collect='ACTIF', employee_id='', labo_comment='', samples_total_labo=0 where id=3;
 
 
 
