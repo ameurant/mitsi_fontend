@@ -1,51 +1,111 @@
 
 
 
-mitsibox_collect_history (table)
+mitsibox_collect_history
 =========================
-+----+------------------------------+----------------+------------+----------+--------+-------------+--------------+--------------------+
-| id | round_id                     | driver_id      | start_date | end_date | status | employee_id | labo_comment | samples_total_labo |
-+----+------------------------------+----------------+------------+----------+--------+-------------+--------------+--------------------+
-|  5 | 00005f0d88fe0000000000000018 | steve          | NULL       | NULL     | ACTIVE | NULL        | NULL         |                  0 |
-+----+------------------------------+----------------+------------+----------+--------+-------------+--------------+--------------------+
-                                                                               ACTIVE
-                                                                               DONE
-    Table coté labo qui récupère les saclots rapoortés par un chauffeur au labo
+Type :
+    table
+
+Description :
+    Table coté labo qui récupère les saclots raportés par un chauffeur au labo
     La date Endate se met a jour dès que l'emplouyé du labo à encoder les saclots
 
 
+id
+round_id
+driver_id
+start_date
+end_date
+status_collect
+employee_id
+labo_comment
+samples_total_labo
 
-mitsibox_collect_box_history (table)
++----+------------------------------+----------------+------------+----------+----------------+-------------+--------------+--------------------+
+| id | round_id                     | driver_id      | start_date | end_date | status_collect | employee_id | labo_comment | samples_total_labo |
++----+------------------------------+----------------+------------+----------+----------------+-------------+--------------+--------------------+
+|  5 | 00005f0d88fe0000000000000018 | steve          | NULL       | NULL     |     ACTIVE     | NULL        | NULL         |                  0 |
++----+------------------------------+----------------+------------+----------+----------------+-------------+--------------+--------------------+
+                                                                               ACTIVE
+                                                                               DONE
+
+
+
+mitsibox_collect_box_history
 ============================
-+----+--------------------+------------------------------+-----------------------+---------------------+---------------+
-| id | collect_history_id | box_id                       | collect_box_timestamp | collect_box_comment | samples_total |
-+----+--------------------+------------------------------+-----------------------+---------------------+---------------+
-|  1 |                 12 | 00005ecb95df000000000000000c | 2021-02-04 11:37:23   | NULL                |             0 |
-|  1 |                 12 | 00005ecb95df000000000000000b | 2021-02-04 11:48:00   | NULL                |             2 |
-|  1 |                 12 | 00005ecb95df000000000000000d | 2021-02-04 12:20:13   | NULL                |             4 |
-|  1 |                 12 | 00005ecb95df000000000000000f | 2021-02-04 13:37:51   | NULL                |             5 |
-+----+--------------------+------------------------------+-----------------------+---------------------+---------------+
+Type :
+    table
 
-    Table dans laquelle le driver vient écrire le nbre de saclots relevés pendant une tournée chaque fois qu'il scanne
-    par boite
+Description :
+    Table dans laquelle le driver vient écrire le nbre de saclots
+    relevés pendant une tournée chaque fois qu'il scanne une boite
+    Une ligne par boite relevée avec le total dans la boite et l'id  de la collect (tournée)
+
+id
+collect_history_id
+box_id
+collect_box_timestamp
+collect_box_driver_comment
+collect_box_driver_samples_total
+
++----+--------------------+------------------------------+-----------------------+----------------------------+----------------------------------+
+| id | collect_history_id | box_id                       | collect_box_timestamp | collect_box_driver_comment | collect_box_driver_samples_total |
++----+--------------------+------------------------------+-----------------------+----------------------------+----------------------------------+
+|  1 |                 12 | 00005ecb95df000000000000000c | 2021-02-04 11:37:23   | NULL                       |                                0 |
+|  1 |                 12 | 00005ecb95df000000000000000b | 2021-02-04 11:48:00   | NULL                       |                                2 |
+|  1 |                 12 | 00005ecb95df000000000000000d | 2021-02-04 12:20:13   | NULL                       |                                4 |
+|  1 |                 12 | 00005ecb95df000000000000000f | 2021-02-04 13:37:51   | NULL                       |                                5 |
++----+--------------------+------------------------------+-----------------------+----------------------------+----------------------------------+
 
 
 
-mitsibox_sample_events (table)
+
+
+mitsibox_sample_events
 ======================
-+----+---------------------+------------------------------+------------------------------+---------+
-| id | time_stamp          | sample_id                    | box_id                       | status  |
-+----+---------------------+------------------------------+------------------------------+---------+
-| 25 | 2021-02-04 11:56:43 | 00006011b7d00000000000000004 | 00005ecb95df000000000000000c | INBOX   |
-+----+---------------------+------------------------------+------------------------------+---------+
-                                                                                           INBOX
-                                                                                           TRANSIT
-                                                                                           LABO
-    Table qui détermine l'état d'une puce rfid
+Type :
+    table
+
+Description :
+    Table qui détermine l'état d'une puce rfid durant sont parcours entre
+    son entrée dans une box et son arrivée au labo
+
+id
+time_stamp
+sample_id
+box_id
+status_sample
+
++----+---------------------+------------------------------+------------------------------+----------------+
+| id | time_stamp          | sample_id                    | box_id                       | status_sample  |
++----+---------------------+------------------------------+------------------------------+----------------+
+| 25 | 2021-02-04 11:56:43 | 00006011b7d00000000000000004 | 00005ecb95df000000000000000c |     INBOX      |
++----+---------------------+------------------------------+------------------------------+----------------+
+                                                                                               INBOX
+                                                                                               TRANSIT
+                                                                                               LABO
 
 
-mitsibox_sample (collection)
+
+mitsibox_sample
 ===============
+Type :
+    collection
+
+Description :
+    Table
+        qui contient le numero de l'ID de la RFID
+        record créé par Fred au moment ou la puce est scannée par la boite                             ==> INBOX
+        record updaté par alain chaque fois qu'il y un changement
+                                                            |--> pris en charge par le chauffeur       ==> TRANSIT
+                                                            |--> retour au labo à la fin de la tournée ==> LABO
+
+_id
+tag
+box_id
+status
+last_action
+
 +------------------------------+-----------+------------------------------+--------+---------------------+
 | _id                          | tag       | box_id                       | status | last_action         |
 +------------------------------+-----------+------------------------------+--------+---------------------+
@@ -54,89 +114,102 @@ mitsibox_sample (collection)
                                                                             INBOX
                                                                             TRANSIT
                                                                             LABO
-    Table 
-        qui contient le numero de l'ID de la RFID
-        record créé par Fred au moment ou la puce est scannée par la boite                                   INBOX
-        record updaté par alain chaque fois qu'il y un changement --> pris en charge par le chauffeur        TRANSIT
-                                                                  --> retour au labo à la fin de la tournée  LABO
 
 
 
 
 
-Regarde si j'ai oublié qqch:
-14 h 01
-Réception Labo
-===============
+--------------------------------------------------------------------------------------------------------------------------------
+
+================
+ RÉCEPTION LABO
+================
+
 "scannange" du saclo
 ---------------------
--->
-    recherche du sample_id via son tag rfid:
-    db.mitsibox_samples.find("tag = '340774124'")
-{
-    "_id": "00006011b7d00000000000000004",
-    "tag": "340774124",
-    "box_id": "00005ecb95df000000000000000c",
-    "status": "INBOX",
-    "last_action": "2021-02-04 11:56:43"
-}
+
+--> recherche du sample_id via son tag rfid:
+        db.mitsibox_samples.find("tag = '340774124'")
+            {
+                "_id": "00006011b7d00000000000000004",
+                "tag": "340774124",
+                "box_id": "00005ecb95df000000000000000c",
+                "status": "INBOX",
+                "last_action": "2021-02-04 11:56:43"
+            }
 
 --> Si status pas TRANSIT ??
-Trouver le round_id pour changer le status dans mitsibox_collect_history (de ACTIVE à DONE)
-select ch.id, round_id from mitsibox_collect_box_history as cbh join mitsibox_collect_history as ch on ch.id = cbh.collect_history_id where box_id = '00005f0d88fe0000000000000002' and status='ACTIVE';
-+----+------------------------------+
-| id | round_id                     |
-+----+------------------------------+
-| 12 | 00005f0d88fe0000000000000018 |
-+----+------------------------------+
-update mitsibox_collect_history where id = '12' status ACTIVE to-->  DONE;
+    Trouver le round_id pour changer le status dans mitsibox_collect_history (de ACTIVE à DONE)
+        select
+            ch.id, round_id
+        from
+            mitsibox_collect_box_history as cbh join mitsibox_collect_history as ch on ch.id = cbh.collect_history_id
+        where
+            box_id = '00005f0d88fe0000000000000002' and status='ACTIVE';
+        +----+------------------------------+
+        | id | round_id                     |
+        +----+------------------------------+
+        | 12 | 00005f0d88fe0000000000000018 |
+        +----+------------------------------+
+
+        update
+            mitsibox_collect_history
+        where
+            id = '12' status ACTIVE to-->  DONE;
 
 
----> via la machine on ne saura pas l'employee_id
+--> via la machine on ne saura pas l'employee_id
 
-Recherche dans mitsibox_sample_events du denier record où sample_id et status TRANSIT et ajouter une ligne
-avec status LABO
+    Recherche dans mitsibox_sample_events du denier record où sample_id et status TRANSIT et ajouter une ligne
+    avec status LABO
 
-select * from mitsibox_sample_events where sample_id='00005f0d88fe0000000000000013' and status='TRANSIT' order by time_stamp desc limit 1;
-+----+---------------------+------------------------------+------------------------------+---------+
-| id | time_stamp          | sample_id                    | box_id                       | status  |
-+----+---------------------+------------------------------+------------------------------+---------+
-|  8 | 2020-12-05 00:27:07 | 00005f0d88fe0000000000000013 | 00005ecb95df000000000000000c | TRANSIT |
-+----+---------------------+------------------------------+------------------------------+---------+
-et changer le status de TRANSIT à LABO aussi dans
-db.mitsibox_samples.find("_id = '00006011b7d00000000000000004'")
-{
-    "_id": "00006011b7d00000000000000004",
-    "tag": "340774124",
-    "box_id": "00005ecb95df000000000000000c",
-    "status": "TRANSIT",
-    "last_action": "2021-02-04 11:56:43"
-}
+        select
+            *
+        from
+            mitsibox_sample_events
+        where
+            sample_id='00005f0d88fe0000000000000013' and status='TRANSIT' order by time_stamp desc limit 1;
+        +----+---------------------+------------------------------+------------------------------+---------+
+        | id | time_stamp          | sample_id                    | box_id                       | status  |
+        +----+---------------------+------------------------------+------------------------------+---------+
+        |  8 | 2020-12-05 00:27:07 | 00005f0d88fe0000000000000013 | 00005ecb95df000000000000000c | TRANSIT |
+        +----+---------------------+------------------------------+------------------------------+---------+
+
+    et changer le status de TRANSIT à LABO aussi dans
+        db.mitsibox_samples.find("_id = '00006011b7d00000000000000004'")
+            {
+                "_id": "00006011b7d00000000000000004",
+                "tag": "340774124",
+                "box_id": "00005ecb95df000000000000000c",
+                "status": "TRANSIT",
+                "last_action": "2021-02-04 11:56:43"
+            }
 
 
 
 
-
-COLLECTE
---------
+==========
+ COLLECTE
+==========
 une collecte
-    . c'est le rammasage des samples (prélevements saclots) par un chaufeur (driver) attaché à une tournée (round) à une date donnée
-    . est une insatnce de la tournée
-    . commence quand un driver scanne une boite dans cette tournée => status -> ACTIVE
-    . se termeine quand le chauffeur dépose sa collecte de prélèvement au labo => status -> DONE
-    
+    . c'est le ramassage des samples (prélevements saclots) par un chaufeur (driver) attaché à une tournée (round) à
+      une date donnée
+    . c'est une insatnce de la tournée
+    . commence quand un driver scanne une boite dans cette tournée         => mitsibox_collect_history.status_collect ==> ACTIVE
+    . se termine quand le driver dépose sa collecte de prélèvement au labo => mitsibox_collect_history.status_collect ==> DONE
+
 
 FONCTIONNEL
 -----------
-driver ouvre la porte
-driver scanne la boite
-driver arrive sur le formulaire
-driver encode une nombre de saclots et éventuellement un commentaire
+    . driver ouvre la porte
+    . driver scanne le qrcode de la boite
+    . driver arrive sur le formulaire
+    . driver encode une nombre de saclots et éventuellement un commentaire
 
 
 ECRITURE DB
 -----------
-[OK]    1. lancer le find : tous les saclots dans une boite  
+[OK]    1. lancer le find : tous les saclots dans une boite
                 |--> db.mitsibox_samples.find("box_id='00005ecb95df000000000000000c' and status='INBOX'").fields("_id")
 
 [OK]    2. mettre à jour la collection mitsibox_samples de INBOX à TRANSIT
@@ -145,42 +218,57 @@ ECRITURE DB
 [OK]    3. ajouter un enregistrement par sample du find dans la table mitsibox_sample_events
                 |--> sample_id
                 |--> box_id
-                |--> status 
-                |       |--> INBOX    -> entrée dans une box
-                |       |--> TRANSIT  -> dans le camion
-                |       |--> PENDING  -> l'employée encode via le form mais les puces n'ont pas encore été scannée
-                |       |--> LABO     -> les puces sont scannées
+                |--> status
+                |       |--> INBOX    ==> entrée dans une box
+                |       |--> TRANSIT  ==> dans le camion
+                |       |--> PENDING  ==> l'employée encode via le form mais les puces n'ont pas encore été scannée
+                |       |--> LABO     ==> les puces sont scannées
 
 
 
-1. aller voir dans  la collection mitsibox_collect_history si round_id existe à la date d'ajourd'hui
-    Si oui la tournée est en cours 
-        recupérer l'id 
+1. aller voir dans  la table mitsibox_collect_history si round_id existe à la date d'ajourd'hui
+    Si oui la tournée est en cours
+        recupérer l'id
     Si non la tournée débute
         créer une record et récupérer l'id
             start_date automatique
-    def getCollectionId(self, roundId)
-TERMINE
+    ajouter un record avec les données suivantes :
+        round_id            --> id de la tournée en cours
+        driver_id           --> idPlone du driver de la tournée en cours
+        start_date          --> automatique au moment du premier insert : moment où la tounée commence
+        end_date            --> automatique au moment ou l'employé du labo reçoit les prélèvements de la tornée en cours : moment où la tounée se termine
+        employee_id         --> idPlone de l'employé du labo qui réceptionne les prélèvements de la tournée en cours
+        labo_comment        --> commentaire éventuel par l'employé du labo
+        samples_total_labo  --> nbre de saclots reçus par l'employé du labo
+        status_collect      -->  etat de la tournée
+                |==> ACTIVE : la tournée est en cours et passe à active au moment du scanne d'une des boites de la tournée
+                |==> DONE   : le driver est passé au labo et a remis sa collecte à l'employé
+    def getCollectionHistoryId(self, roundId)
+        |--> TERMINE
 
 
-2. aller dans la collection mitsibox_collect_box_history
-    ajouter un record avec le données 
-            collect_history_id box_id --> id de la table mitsibox_collect_history
-            collect_box_comment 
-            samples_total --> (nbre saclots prélevés)
-            collect_box_timestamp -->automatique
-            status -->  etat de la tournée
-                |--> ACTIVE : la tournée est en cours et passe à active au moment du scanne d'une des boites de la tournée
-                |--> DONE : le driver est passé au labo et a remise sa collecte
-    def getCollectionId(self, roundId)
-TERMINE
+2. aller dans la table mitsibox_collect_box_history
+    ajouter un record avec les données suivantes :
+            collect_history_id               --> id de la tournée en cours table mitsibox_collect_history  def getCollectionHistoryId(self, roundId):
+            box_id                           --> id de la boite en cours de prélèvement
+            collect_box_timestamp            --> automatique
+            collect_box_driver_comment       --> éventuel commentaire du driver
+            collect_box_driver_samples_total --> nbre saclots prélevés par le driver
+
+    def insertCollectionByDriver(self)
+        |--> TERMINE
 
 
-3. aller dans la table mitsibox_samples_event 
+3. aller dans la table mitsibox_samples_event
     écrire une nouvelle ligne avec
-        box_id
-        sample_id
-        status  --> "TRANSIT"    
+        box_id          --> id de la boite dans lequel la puce RFID est déposée
+        sample_id       --> id de la puce RFID contenue dans le sac de prélèvement
+        status_sample   --> etat de la puce RFID
+                |==> INBOX    : la puce est scannée au moment ou elle entre dans une boite
+                |==> TRANSIT  : la puce vient d'être relevée par un driver durent une collecte (trounée)et est en route vers le labo
+                |==> LABO     : la puce vient d'être scannée au labo à la fin d'une tournée
+
+
 
 
 SCAN D'UN TAG TFID LORS DU DEPOT DANS UNE BOITE
@@ -188,16 +276,16 @@ SCAN D'UN TAG TFID LORS DU DEPOT DANS UNE BOITE
 Lorsqu'un tag (rfid) est scanné:
     . une entrée est crée dans la COLLECTION mitsibox_samples si ce tag n'est pas encore existant
       et le status est "INBOX" et on connait également le box_id.
-    
+
     . en même temps une entrée contenant le sample_id crée dans la collection mitsibox_samples  est ajoutée dans la TABLE
       mitsibox_sample_events avec le status "INBOX"
-    
+
     . A chaque changement de status une entrée (un enregistrement) est ajoutée dans cette table.
 
 
 TROUVER LES SAMPLES DANS UNE BOITE
 ----------------------------------
-pour trouver tous les samples qui sont dans la boite lors de la collecte: 
+pour trouver tous les samples qui sont dans la boite lors de la collecte:
     db.mitsibox_samples.find("box_id='00005ecb95df000000000000000c' and status='INBOX'").fields("_id")
 
 et tu dois aussi modifier cette collection en changeant le status pour ces documents à "TRANSIT"
@@ -215,8 +303,8 @@ Si ce sont des collections
 
 
 
-STATUS 
-    |--> statut de la puce RIFID 
+STATUS
+    |--> statut de la puce RIFID
     |--> changé automatiquement par le programme de Lefred
     |--> ETAT
     |       |-> INBOX
