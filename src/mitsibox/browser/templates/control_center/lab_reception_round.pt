@@ -32,11 +32,11 @@
         <form action="receptionCollectByLabo"
               method="post">
             <div class="form-input">
-                <label for="round-id">
+                <label for="id-round">
                     Séléctionner la tournée :
                 </label>
-                <select name="roundId"
-                        id="round-id"
+                <select name="idRound"
+                        id="id-round"
                         required>
                     <option>...</option>
                     <tal:boucle tal:repeat="myRound allRounds">
