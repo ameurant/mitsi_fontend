@@ -12,21 +12,25 @@
            tal:define="dummy python:request.set('disable_border',1)" />
 
 <metal:main fill-slot="content-core"
-            tal:define="idBox string:00005ecb95df000000000000000c;
-                        idRound string:00006011b7d00000000000000035;
+            tal:define="idBox request/idBox;
                         commonView context/@@manageCommon;
                         boxesView context/@@manageBox;
+                        roundView context/@@manageRound
                         idDriver commonView/getUserAuthenticated; 
-                        myBox python:boxesView.getOneBoxById(idBox)">
+                        myBox python:boxesView.getOneBoxById(idBox);
+                        myRound python:roundView.getRoundByDriverId(idDriver)">
 
     <section class="formulaire">
         <h2>
             <i class="fas fa-ellipsis-v"></i>
             Relever une boite
         </h2>
-        <span class="discret">
-            collecte-des-boites?idBox=<span tal:content="idBox" />
-        </span>
+        <p class="discret">
+            idBox = <span tal:content="myBox/idBox" />
+        </p>
+        <p class="discret">
+            idRound = <span tal:content="myRound/idRound" />
+        </p>
         <br />
         <span class="discret">
             ==> <span tal:content="user" />
@@ -39,6 +43,7 @@
                 <span tal:content="myBox/name"
                       class="orange" /> ::
                 <span tal:content="myBox/address" />
+                <br />
                 <span tal:content="myBox/cp" />
                 <span tal:content="myBox/localite" />
             </div>
