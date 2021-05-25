@@ -26,21 +26,21 @@ class ManageCollections(ConnexionDb):
         tableCollections = self.getLabDbAccessTable('mitsibox_collect_history')
         recs = tableCollections.select().execute()  # cas d'une table
         myCollections = recs.fetch_all()
-        print "myCollections : %s" % (myCollections,)
         return myCollections
 
-    def getAllSamplesFormBox(self, boxId):
+
+    def getAllSamplesFormBox(self, idBox):
         """
         table mitsibox_samples
         récupères tous le total qui ont été déposés dans une boite
         et dont le statut est INBOX
         """
         collectSamples = self.getLabDbAccessCollection('mitsibox_samples')
-        recs = (collectSamples.find(("box_id='%s' and status='INBOX'")%(boxId,)).fields("_id")).execute()
+        recs = (collectSamples.find(("box_id='%s' and status='INBOX'")%(idBox,)).fields("_id")).execute()
         mySamples = recs.fetch_all()
         return mySamples
 
-    def getCollectionHistoryId(self, roundId):
+    def getCollectionHistoryId(self, idRound):
         """
         table mitsibox_collect_history
         Vérifie si à la date courante il existe déjà une
@@ -63,7 +63,7 @@ class ManageCollections(ConnexionDb):
                                      and
                                      status_collect='ACTIVE'
                                      and start_date >= curdate();
-                                 """ % (roundId,)).execute()
+                                 """ % (idRound,)).execute()
         result = request.fetch_one()
 
         if (result is None):
@@ -75,7 +75,7 @@ class ManageCollections(ConnexionDb):
                                            driver_id,
                                            status_collect)
                                        values
-                                          ('%s', '%s', '%s')""" % (roundId, driverId, statusCollect)).execute()
+                                          ('%s', '%s', '%s')""" % (idRound, driverId, statusCollect)).execute()
 
             request.get_autoincrement_value()  # recupère la clé qui vient d'être insérée
 
@@ -99,25 +99,24 @@ class ManageCollections(ConnexionDb):
         statusCollect = "INBOX"
 
         mySamples = self.getAllSamplesFormBox(idBox)
-        print "MySamples : %s" % (mysamples,)
+        print "===> MYSAMPLES : %s" % (mySamples,)
 
         collectHistoryId = self.getCollectionHistoryId(idRound)
 
         # ouverture de la connexion
         session = self.getConnexion()
-        db = session.get_schema("mitsi_chuhautesenne")
-
+        #  db = session.get_schema("mitsi_chuhautesenne")
 
         # recup du dernier _id qui vient d'être inséré
-        #request = session.sql("select last_insert_id()").execute()
-        #collect_history_id = request.fetch_one()[0]
-        #print "collect_history_id : %s" % (collect_history_id,)
-        #print "box_id : %s" % (box_id,)
+        # request = session.sql("select last_insert_id()").execute()
+        # collect_history_id = request.fetch_one()[0]
+        # print "collect_history_id : %s" % (collect_history_id,)
+        # print "box_id : %s" % (box_id,)
 
         # Insertion dans la table tableCollectBoxHistory
         # lorsqu'un chauffeur recupère les saclots d'une boite
         tableCollectBoxHistory = self.getLabDbAccessTable('mitsibox_collect_box_history')
-        tableCollectBoxHistory.insert(['collect_history_id', 'box_id', 'collect_box_driver_comment', 'collect_box_driver_samples_total']).values(collectHistoryId, idBox, collectBoxDriverComment, totalSamplesCollect).execute()
+        tableCollectBoxHistory.insert(['collect_history_id', 'box_id', 'collect_box_driver_comment', 'collect_box_driver_samples_total']).values(collectHistoryId, idBox, collectBoxDriverComment, int(totalSamplesCollect)).execute()
         session.commit()
 
         portalUrl = getToolByName(self.context, 'portal_url')()
@@ -166,7 +165,6 @@ class ManageCollections(ConnexionDb):
         for i in range(len(mySamples)):
             collectionsSample.insert(['sample_id', 'box_id', 'status']).values(mySamples[i]['_id'], idBox, status).execute()
 
-
     def updateStatusSamples(self, idBox, status):
         """
         /!\ ne sert que pour les RFID
@@ -180,27 +178,30 @@ class ManageCollections(ConnexionDb):
         collectSamples = self.getLabDbAccessCollection('mitsibox_samples')
         request = collectSamples.modify((("box_id='%s' and status='TRANSIT'") % (idBox,))).set("status", "%s" % (status,)).execute()
 
-
     def receptionCollectByLabo(self):
         """
         table mitsibox_collect_history
         Mise a jour des données d'une collect lorsque le driver arrive au labo.
-        L'employé encode le nombre de prélèvement ramené par le chauffeur
+        L'employé encode le nombre de prélèvement ramené par le chauffeur†
         La end_date est insrée (moment de la fin de la collecte)
         Le status_collect passe à DONE (fin e la collecte)
         """
         fields = self.request.form
-        idDriver = fields.get('idDriver', None)
         idRound = fields.get('idRound', None)
-        idEmployeLab = fields.get('idEmployeLab', None)
-        commentairEmploye = fields.get('commentairEmploye', None)
-        nbrePrelevementRemis = fields.get('totalSaclots', None) or O
 
-        statusCollect = "DONE"
+        collectHistoryId = self.getCollectionHistoryId(idRound)
+        print "===> MYCOLLECTID : %s" % (collectHistoryId,)
+
+        myCollection = {}
+        myCollection['status_collect'] = "DONE"
+        myCollection['employe_id'] = fields.get('idEmployeLab', None)
+        myCollection['labo_comment'] = fields.get('commentairEmploye', None)
+        myCollection['samples_total_labo'] = fields.get('totalSaclots', None) or 0
 
         tableCollectHistory = self.getLabDbAccessTable('mitsibox_collect_history')
-        tableCollectHistory.modify(['en_date', 'status_collect', 'employe_id', 'labo_comment', 'samples_total_labo' ]).values(endDate, statusCollect, idEmployeLab, commentairEmploye, nbrePrelevementRemis).execute()
-        session.commit()
+
+        # XXXXXXXXXXXXXXXXXXXX
+        tableCollectHistory.update(("_id='%s'" % collectHistoryId).set(myCollection)).execute()
 
         portalUrl = getToolByName(self.context, 'portal_url')()
         ploneUtils = getToolByName(self.context, 'plone_utils')
