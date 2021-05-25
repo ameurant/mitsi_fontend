@@ -34,6 +34,16 @@ class ManageRounds(ConnexionDb):
         myRound = recs.fetch_one()
         return myRound
 
+    def getRoundByDriverId(self, idDriver):
+        """
+        Récupère les infos d'une tournée selon l'id du driver
+        """
+        tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
+        recs = tablesRounds.find("roundDriverId =='%s'"%(idDriver,)).execute()
+        myRound = recs.fetch_one()
+        import pdb; pdb.set_trace()
+        return myRound
+
     def getRoundsOfBox(self, idBox):
         """
         Récupère le nom dde la tournée à la quelle appartient une box
@@ -99,7 +109,7 @@ class ManageRounds(ConnexionDb):
         """
         tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
         fields = self.request.form
-        idRound = fields.get('idRound', None) 
+        idRound = fields.get('idRound', None)
 
         newRound = {}
         newRound['roundName'] = fields.get('roundName', None).decode("utf-8")
