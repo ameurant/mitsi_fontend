@@ -143,10 +143,10 @@
         />
 
     <browser:page
-        name="reception-tournee"
+        name="reception-tournee-par-le-labo"
         for="*"
         class=".manage_collections.ManageCollections"
-        template="templates/control_center/reception_round.pt"
+        template="templates/control_center/lab_reception_round.pt"
         permission="zope2.View"
         allowed_interface=".interfaces.IManageCollections"
         />
