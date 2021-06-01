@@ -389,9 +389,11 @@ h2{
 /*** CARTE ***/
 
 #section-box-scroll{
-    border:1px solid #f00;
+    border:1px solid #ccc;
+    border-radius:8px;
     overflow-x: scroll;
     padding:3px 0px 10px 0px;
+    margin-top:2px;
 }
 
 #section-donnee-info-round{
