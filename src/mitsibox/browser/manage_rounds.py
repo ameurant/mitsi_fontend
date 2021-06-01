@@ -41,7 +41,6 @@ class ManageRounds(ConnexionDb):
         tablesRounds = self.getLabDbAccessCollection('mitsibox_rounds')
         recs = tablesRounds.find("roundDriverId =='%s'"%(idDriver,)).execute()
         myRound = recs.fetch_one()
-        import pdb; pdb.set_trace()
         return myRound
 
     def getRoundsOfBox(self, idBox):
