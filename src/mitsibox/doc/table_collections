@@ -125,6 +125,25 @@ last_action
  RÉCEPTION LABO
 ================
 
+Actuellement, comme il n'y a pas de puce RFID, le driver arrive au labo, l'employée
+sélectionne l'instance de la tournée active du chaufffeur mitsibox_collect_history.status_collect == 'ACTIVE'
+        |--> getCollectionHistoryId(idRound)
+
+Une fois la tournée sélectionnée l'employé du labo encode le nombre de sachets ramenés
+et peut mettre un commentaire
+
+Au clic on met à jour la table mitsibox_collect_history
+        |--> status_collect         : 'DONE'
+        |--> employee_id            : idPlone de l'employé du labo
+        |--> labo_comment           : un éventuel commentaire émis par l'employé
+        |--> samples_total_labo     : le nombre de prélèvements
+def receptionCollectByLabo
+    |--> TERMINE
+
+A améliorer :
+    afficher le nombre total de prélèvement suite a ce que les boites ont détectés.
+
+
 "scannange" du saclo
 ---------------------
 
@@ -271,7 +290,7 @@ ECRITURE DB
 
 
 
-SCAN D'UN TAG TFID LORS DU DEPOT DANS UNE BOITE
+SCAN D'UN TAG RFID LORS DU DEPOT DANS UNE BOITE
 -----------------------------------------------
 Lorsqu'un tag (rfid) est scanné:
     . une entrée est crée dans la COLLECTION mitsibox_samples si ce tag n'est pas encore existant
