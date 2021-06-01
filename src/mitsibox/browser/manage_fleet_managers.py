@@ -73,7 +73,7 @@ class ManageFleetManagers(ConnexionDb):
 
     def insertFleetManager(self):
         """
-        insertion d'un nouveau fleet-manager
+        Insertion d'un nouveau fleet-manager
         """
         tableFleetManagers = self.getLabDbAccessCollection('mitsibox_fleet_managers')
 
