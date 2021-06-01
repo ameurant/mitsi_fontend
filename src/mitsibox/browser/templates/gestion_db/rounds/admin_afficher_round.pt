@@ -133,6 +133,12 @@ require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
 
         let mymap = L.map('map-mitsiboxes').setView([50.581997, 4.078926], 10);
         let marker = L.marker([50.581997, 4.078926], {icon: iconeLab}).addTo(mymap).bindPopup("<b> CHU Haute Senne </b>");
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
 
         /*
         let tableau = [["BOX lefred", 50.464886, 4.100733],
@@ -149,12 +155,30 @@ require(["++theme++mitsibox/js/leaflet-src.js"], function(mapBox){
             if (depositCount == 0){
                 console.log('depositCount=0');
                 let marker = L.marker([latBox, longBox], {icon: iconeVide}).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
+                marker.on('mouseover', function (e) {
+                    this.openPopup();
+                });
+                marker.on('mouseout', function (e) {
+                    this.closePopup();
+                });
             }
             if (depositCount > 10){
                 let marker = L.marker([latBox, longBox], {icon: iconeAlert}).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
+                marker.on('mouseover', function (e) {
+                    this.openPopup();
+                });
+                marker.on('mouseout', function (e) {
+                    this.closePopup();
+                });
             }
             if (depositCount >=1 && depositCount < 10){
                 let marker = L.marker([latBox, longBox], {icon: iconeNormale}).addTo(mymap).bindPopup("<b>" + nameBox + "</b><br />" + "<span class='bleu-glyphe texte-centrer'>" + depositCount + "</span>" );
+                marker.on('mouseover', function (e) {
+                    this.openPopup();
+                });
+                marker.on('mouseout', function (e) {
+                    this.closePopup();
+                });
             }
         };
 
