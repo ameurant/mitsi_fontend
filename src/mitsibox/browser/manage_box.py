@@ -16,7 +16,7 @@ class ManageBox(ConnexionDb):
     """
     implements(IManageBox)
 
-    def getListingBox(self):
+    def getListingAllBoxes(self):
         """
         Récupères les infos de toutes les boites
         """

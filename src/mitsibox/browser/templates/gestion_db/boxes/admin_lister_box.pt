@@ -12,7 +12,7 @@
             tal:define="labsView context/@@manageLabs;
                         boxesView context/@@manageBox;
                         roundsView context/@@manageRounds;
-                        allBoxes boxesView/getListingBox">
+                        allBoxes boxesView/getListingAllBoxes">
 <!--
 <nav class="icone-toggle-listing-box">
     <a href=""

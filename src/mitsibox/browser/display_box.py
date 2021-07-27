@@ -35,13 +35,25 @@ class DisplayBox(ConnexionDb):
         infoBattery = statutBattery.split(' ')
         return infoBattery
 
-    def getListingBox(self):
+    def getListingAllBoxes(self):
         """
         Récupères les infos de toutes les boites
         """
         tablesBoxes = self.getLabDbAccessCollection('mitsibox_boxes')
+        #recs = tablesBoxes.find("lab_id=='%s'"%(idLab,)).execute()
         recs = tablesBoxes.find().execute()
         myBoxes = recs.fetch_all()
+        return myBoxes
+
+    def getListingBoxesOnProduction(self):
+        """
+        Récupères les infos de toutes les boites
+        en production productionsstate = True
+        """
+        collectionBoxes = self.getLabDbAccessCollection('mitsibox_boxes')
+        recs = collectionBoxes.find("productionstate='True'").execute()
+        myBoxes = recs.fetch_all()
+        print("===> myBoxes : %s") % (myBoxes,)
         return myBoxes
 
     def getOneBox(self, idBox):

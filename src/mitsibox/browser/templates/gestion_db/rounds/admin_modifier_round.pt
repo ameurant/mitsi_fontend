@@ -15,8 +15,8 @@
             tal:define="idRound request/idRound;
                         boxesView context/@@displayBox;
                         driversView context/@@manageDrivers;
-                        roundsView context/@@manageRounds; 
-                        allBoxes python:boxesView.getListingBox();
+                        roundsView context/@@manageRounds;
+                        allBoxes python:boxesView.getListingBoxesOnProduction();
                         allDrivers python:driversView.getAllDrivers;
                         myRound python:roundsView.getRoundById(idRound)">
 
@@ -28,7 +28,7 @@
 
         <form action="updateRound"
               method="post">
-              
+
             <div class="form-input">
                 <label for="round-name">
                     Nom de la tournée :
@@ -106,7 +106,7 @@
                     </tal:boucle>
                 </select>
             </div>
-            
+
             <div class="formControls" align="center">
                 <input type="hidden"
                        name="idRound"

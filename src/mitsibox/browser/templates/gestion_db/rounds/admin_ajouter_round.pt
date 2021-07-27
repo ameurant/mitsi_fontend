@@ -13,8 +13,8 @@
 
 <metal:main fill-slot="content-core"
             tal:define="boxView context/@@displayBox;
-                        driversView context/@@manageDrivers; 
-                        allBoxes python:boxView.getListingBox();
+                        driversView context/@@manageDrivers;
+                        allBoxes python:boxView.getListingBoxesOnProduction();
                         allDrivers python:driversView.getAllDrivers()">
     <section class="formulaire">
         <h2>
@@ -24,7 +24,7 @@
 
         <form action="insertRound"
               method="post">
-              
+
             <div class="form-input">
                 <label for="round-name">
                     Nom de la tournée :
@@ -93,13 +93,13 @@
                         <option tal:attributes="value myBox/_id">
                             <strong><span tal:content="myBox/name" />
                             <span tal:content="myBox/address" />
-                            <span tal:content="myBox/cp" /> 
+                            <span tal:content="myBox/cp" />
                             <span tal:content="myBox/localite" />
                         </option>
                     </tal:boucle>
                 </select>
             </div>
-            
+
             <div class="formControls" align="center">
                 <input type="submit"
                        name="submit"

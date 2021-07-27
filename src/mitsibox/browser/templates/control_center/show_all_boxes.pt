@@ -12,7 +12,7 @@
             tal:define="labsView context/@@manageLabs;
                         boxesView context/@@displayBox;
                         roundsView context/@@manageRounds;
-                        allBoxes python:boxesView.getListingBox()">
+                        allBoxes python:boxesView.getListingAllBoxes()">
 <nav class="icone-toggle-listing-box">
     <a href=""
         tal:attributes="href string:${context/portal_url}/listing-box">
@@ -24,7 +24,8 @@
     <tal:boucle tal:repeat="myBox allBoxes">
         <section class="box"
                  tal:define="index repeat/myBox/index;
-                             idBox myBox/_id">
+                             idBox myBox/_id"
+                 tal:condition="python: myBox.productionstate=='True'">
             <div>
                 <h2 id=""
                     tal:attributes="id string:box${index}-name"
@@ -258,6 +259,11 @@
                     </div>
                 </div>
                 <div>
+                    <!--productionState :: True Flase-->
+                    <span tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
+                        <i class="fad fa-power-off"></i>
+                    </span>
+
                     <!--status :: Active, Light-Sleep, Deep-Sleep-->
                     <div tal:condition="exists: myBox/status"
                          class="status">

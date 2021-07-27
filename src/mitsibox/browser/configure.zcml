@@ -125,11 +125,20 @@
         />
 
     <browser:page
-        name="getListingBox"
+        name="getListingAllBoxes"
         for="*"
         class=".display_box.DisplayBox"
         permission="zope.Public"
-        attribute="getListingBox"
+        attribute="getListingAllBoxes"
+        allowed_interface=".interfaces.IManageDisplayBox"
+        />
+
+    <browser:page
+        name="getListingBoxesOnProduction"
+        for="*"
+        class=".display_box.DisplayBox"
+        permission="zope.Public"
+        attribute="getListingBoxesOnProduction"
         allowed_interface=".interfaces.IManageDisplayBox"
         />
 

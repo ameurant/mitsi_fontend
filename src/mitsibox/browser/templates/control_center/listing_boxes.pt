@@ -11,7 +11,7 @@
 <metal:main fill-slot="content-core"
             tal:define="roundsView context/@@manageRounds;
                         boxesView context/@@displayBox;
-                        allBoxes python:boxesView.getListingBox()">
+                        allBoxes python:boxesView.getListingAllBoxes()">
 <nav class="icone-toggle-listing-box">
     <a href=""
         tal:attributes="href string:${context/portal_url}/show-all-boxes">
