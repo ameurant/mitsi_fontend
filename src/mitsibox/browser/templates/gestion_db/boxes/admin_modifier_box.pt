@@ -143,6 +143,30 @@
                 </span>
             </div>
             <div class="form-input">
+                <label for="box-production-stata">
+                    En production :
+                </label>
+                &nbsp;&nbsp;&nbsp;
+                oui <input type="radio"
+                           name="boxProductionState"
+                           id="box-production-state"
+                           value="True"
+                           checked=""
+                           tal:attributes="checked python: myBox.productionstate == 'True' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                non <input type="radio"
+                           name="boxProductionState"
+                           id="box-production-state"
+                           value="False"
+                           checked=""
+                           tal:attributes="checked python: myBox.productionstate == 'False' or None" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span tal:condition="exists: myBox/productionstate"
+                      tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
+                    <i class="fad fa-power-off"></i>
+                </span>
+            </div>
+            <div class="form-input">
                 <label for="box-arduino">
                     Arduino :
                 </label>

@@ -87,6 +87,7 @@ class ManageBox(ConnexionDb):
         newBox['passwifi'] = fields.get('boxPassWifi', None)
         newBox['alertsms'] = fields.get('boxAlertSms', None)
         newBox['arduino'] = fields.get('boxArduino', None)
+        newBox['productionstate'] = fields.get('boxProductionState', None)
 
         tablesBoxes.add(newBox).execute()
 
@@ -119,6 +120,7 @@ class ManageBox(ConnexionDb):
         myBox['passwifi'] = fields.get('boxPassWifi', None)
         myBox['alertsms'] = fields.get('boxAlertSms', None)
         myBox['arduino'] = fields.get('boxArduino', None)
+        myBox['productionstate'] = fields.get('boxProductionState', None)
 
         tablesBoxes.modify("_id='%s'" % idBox).patch(myBox).execute()
 

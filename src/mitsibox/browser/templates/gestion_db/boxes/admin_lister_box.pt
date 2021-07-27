@@ -42,6 +42,7 @@
                 <th>Localisation</th>
                 <th>SSID Wifi</th>
                 <th>Notification Sms</th>
+                <th>En production</th>
                 <th>Aduino</th>
                 <th>Tournée</th>
                 <th>QR-Code</th>
@@ -80,17 +81,14 @@
                         </span>
                     </td>
                     <td class="text-center">
+                        <span tal:condition="exists: myBox/productionstate"
+                              tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
+                            <i class="fad fa-power-off"></i>
+                        </span>
+                    </td>
+                    <td class="text-center">
                         <span tal:condition="exists: myBox/arduino"
                               tal:content="myBox/arduino" />
-                    </td>
-                     <td class="text-center">
-                        <img src=""
-                             title=""
-                             alt=""
-                             class="qr-code-50"
-                             tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
-                                             title string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
-                                             alt string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
                     </td>
                     <td class="text-center">
                         <talblock tal:condition="python: myRound is not None">
@@ -105,6 +103,15 @@
                                 </a>
                             </div>
                         </talblock>
+                    </td>
+                    <td class="text-center">
+                        <img src=""
+                             title=""
+                             alt=""
+                             class="qr-code-50"
+                             tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
+                                             title string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
+                                             alt string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
                     </td>
                     <td class="text-center">
                         <nav class="menu-bouton">

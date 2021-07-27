@@ -57,7 +57,8 @@ body {
     font-size:1.8rem;
     padding-right:10px;
 }
-.fa-sms{
+.fa-sms,
+.fa-power-off{
     font-size:1.8rem;
 }
 .fa-info-circle{
