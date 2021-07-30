@@ -37,7 +37,10 @@
                 <div>
                     <!-- nombre de saclots -->
                     <span id=""
-                          tal:attributes="id string:icone${index}-deposit-count" />
+                          tal:attributes="id string:icone${index}-deposit-count"
+                          class="pat-tooltip"
+                          data-toggle="tooltip"
+                          title="Prélèvements" />
                     <span id=""
                           tal:attributes="id string:box${index}-deposit-count"
                           class="data-box"
@@ -47,7 +50,10 @@
                 <div>
                     <!--Dernière température-->
                     <span id=""
-                          tal:attributes="id string:icone${index}-temp" />
+                          tal:attributes="id string:icone${index}-temp"
+                          class="pat-tooltip"
+                          data-toggle="tooltip"
+                          title="Température" />
                     <span id=""
                           tal:attributes="id string:box${index}-last-temp"
                           class="data-box"
@@ -56,7 +62,9 @@
                 </div>
                 <div>
                     <!--Humidité-->
-                    <i class="fas fa-tint bleu-glyphe"></i>
+                    <i class="fas fa-tint bleu-glyphe pat-tooltip"
+                       data-toggle="tooltip"
+                       title="Humidité"></i>
                     <span id=""
                           tal:attributes="id string:box${index}-last-humidity"
                           class="data-box"
@@ -178,6 +186,14 @@
                            ></i>
                     </span>
                 </div>
+                <div>
+                    <!--productionState :: True Flase-->
+                    <span tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
+                        <i class="fad fa-power-off pat-tooltip"
+                           data-toggle="tooltip"
+                           title="En production"></i>
+                    </span>
+                </div>
                 <div tal:condition="exists: myBox/battery_status">
                     <!-- statut de la batterie -->
                     <tal:block tal:define="batteryStatus myBox/battery_status;
@@ -259,11 +275,6 @@
                     </div>
                 </div>
                 <div>
-                    <!--productionState :: True Flase-->
-                    <span tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
-                        <i class="fad fa-power-off"></i>
-                    </span>
-
                     <!--status :: Active, Light-Sleep, Deep-Sleep-->
                     <div tal:condition="exists: myBox/status"
                          class="status">
