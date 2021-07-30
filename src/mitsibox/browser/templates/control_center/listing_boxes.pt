@@ -32,13 +32,15 @@
                 <th>Dernier dépôt</th>
                 <th>Dernier relevé</th>
                 <th>Derniére maj</th>
-                <th>Alimentation</th>
+                <th>Sms</th>
+                <th>Alim</th>
                 <th colspan="2">Etat Porte</th>
                 <th>Adresse</th>
             </tr>
         </thead>
     <tal:boucle tal:repeat="myBox allBoxes">
-        <tr tal:define="index repeat/myBox/index">
+        <tr tal:define="index repeat/myBox/index"
+            tal:condition="python: myBox.productionstate=='True'">
             <td>
                 <!--nom de la boite-->
                 <a href=""
@@ -112,6 +114,12 @@
                       tal:condition="exists: myBox/last_update"
                       tal:content="myBox/last_update" />
             </td>
+            <td class="text-center">
+                <span tal:condition="exists: myBox/alertsms"
+                      tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
+                    <i class="fas fa-sms"></i>
+                </span>
+            </td>
             <td>
                 <div tal:condition="exists: myBox/battery_status"
                      class="texte-centrer">
@@ -158,7 +166,7 @@
                     <span id=""
                           class=""
                           tal:attributes="id string:box${index}-door-status;
-                                          class python: myBox.door_status=='OPEN' and 'discret rouge' or 'discret vert'
+                                          class python: myBox.door_status=='OPEN' and 'discret rouge' or 'discret vert'"
                           tal:condition="exists: myBox/door_status"
                           tal:content="myBox/door_status" />
 
