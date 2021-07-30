@@ -3,8 +3,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      tal:omit-tag=""
-      i18n:domain="box">
+      tal:omit-tag="">
 
 <aside class="portlet portletClassic"
        id="portal-colophon-box"
