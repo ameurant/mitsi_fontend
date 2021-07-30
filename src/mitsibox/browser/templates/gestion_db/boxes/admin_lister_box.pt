@@ -34,15 +34,17 @@
     </a>
 </nav>
 
-<div class="flex-box">
-    <table border="1" class="listing">
+<div class="flex-box flex-justify-content-center">
+    <table id="listing-box-table"
+           class="pat-datatables table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Localisation</th>
                 <th>SSID Wifi</th>
-                <th>Notification Sms</th>
-                <th>En production</th>
+                <th colspan="2">Etat Porte</th>
+                <th>Sms</th>
+                <th>Production</th>
                 <th>Aduino</th>
                 <th>Tournée</th>
                 <th>QR-Code</th>
@@ -53,10 +55,19 @@
             <tal:block tal:define="idLab myBox/lab_id;
                                    idBox myBox/_id;
                                    myLab python:labsView.getLabsById(idLab);
-                                   myRound python:roundsView.getRoundsOfBox(idBox)">
+                                   myRound python:roundsView.getRoundsOfBox(idBox);
+                                   index repeat/myBox/index">
                 <tr>
                     <td class="text-center">
-                        <span tal:content="myBox/name" class="orange" />
+                        <a href=""
+                           tal:attributes="href string:show-one-box?idBox=${myBox/_id}"
+                           class="pat-plone-modal noborder"
+                           èdata-pat-plone-modal="{}">
+                            <span tal:content="myBox/name" class="orange" />
+                            <sup>
+                                &nbsp;&nbsp;<i class="fas fa-external-link-alt"></i>
+                            </sup>
+                        </a>
                         <br />
                         <span tal:content="myLab/name" class="discret" />
                         <br />
@@ -74,6 +85,36 @@
                     <td class="text-center">
                         <span tal:content="myBox/ssid" />
                     </td>
+                    <td>
+                        <div>
+                            <div id=""
+                                 tal:attributes="id string:icone${index}-front-door">
+                                 <!--imgjs-->
+                            </div>
+
+                            <span id=""
+                                  class=""
+                                  tal:attributes="id string:box${index}-door-status;
+                                                  class python: myBox.door_status=='OPEN' and 'discret rouge' or 'discret vert'"
+                                  tal:condition="exists: myBox/door_status"
+                                  tal:content="myBox/door_status" />
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <div id=""
+                                 class=""
+                                 tal:attributes="id string:icone${index}-top-door">
+                                 <!--imgjs-->
+                            </div>
+                            <span tal:attributes="id string:box${index}-top-status;
+                                                  class python: myBox.top_status=='OPEN' and 'discret rouge' or 'discret vert'"
+                                  tal:condition="exists: myBox/top_status"
+                                  tal:content="myBox/top_status" />
+                        </div>
+                    </td>
+
                     <td class="text-center">
                         <span tal:condition="exists: myBox/alertsms"
                               tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
@@ -129,6 +170,8 @@
         </tal:boucle>
     </table>
 </div>
+<script src=""
+        tal:attributes="src string:$portal_url/++theme++mitsibox/js/get_boxes.js"></script>
 </metal:main>
 </body>
 </html>
