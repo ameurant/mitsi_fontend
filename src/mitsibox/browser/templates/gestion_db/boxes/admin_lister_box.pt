@@ -40,9 +40,9 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th colspan="2">Etat Porte</th>
+                <th>Etat Porte</th>
                 <th>Sms</th>
-                <th>Production</th>
+                <th>Prod</th>
                 <th>Aduino</th>
                 <th></th>
             </tr>
@@ -99,8 +99,6 @@
                                   tal:content="myBox/door_status" />
 
                         </div>
-                    </td>
-                    <td>
                         <div>
                             <div id=""
                                  class=""
@@ -119,8 +117,7 @@
                               tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
                             <i class="fas fa-sms"></i>
                         </span>
-                    </td>
-                    <td class="text-center">
+
                         <span tal:condition="exists: myBox/productionstate"
                               tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
                             <i class="fad fa-power-off"></i>
