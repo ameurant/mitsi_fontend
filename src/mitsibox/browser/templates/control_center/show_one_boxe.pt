@@ -25,8 +25,8 @@
             </div>
             <hr />
             <h3 class="flex-box flex-justify-content-space-between">
-                <!-- orelevements -->
-                <div>
+                <!-- prelevements -->
+                <div tal:condition="exists: myBox/deposit_count">
                     <span tal:condition="python: myBox.deposit_count >= 5">
                         <i class="fas fa-vials rouge pat-tooltip"
                            data-toggle="tooltip"
@@ -101,10 +101,11 @@
             </div>
             <hr />
 
-            <div class="flex-box flex-justify-content-space-between">
+            <div>
                 <div>
                     <div>
                         <span class="label-box">Premier dépôt :</span><br />
+                        &nbsp;&nbsp;&nbsp;
                         <span id=""
                               tal:attributes="id string:box-first-deposit"
                               class="data-box date-box"
@@ -113,6 +114,7 @@
                     </div>
                     <div>
                         <span class="label-box">Dernier dépôt :</span><br />
+                        &nbsp;&nbsp;&nbsp;
                         <span id=""
                               tal:attributes="id string:box-last-deposit"
                               class="data-box date-box"
@@ -123,6 +125,7 @@
                 <div>
                     <div>
                         <span class="label-box">Dernier relevé :</span><br />
+                        &nbsp;&nbsp;&nbsp;
                         <span id=""
                               tal:attributes="id string:box-last-relief"
                               class="data-box date-box"
@@ -132,6 +135,7 @@
 
                     <div>
                         <span class="label-box">Dernière mise à jour :</span><br />
+                        &nbsp;&nbsp;&nbsp;
                         <span id=""
                               tal:attributes="id string:box-last-update"
                               class="data-box date-box"
