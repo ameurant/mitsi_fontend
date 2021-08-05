@@ -262,8 +262,7 @@ h2{
     vertical-align:top !important;
 }
 
-#listing-box-table{
-}
+
 
 #listing-box-table td {
     text-align:center;
@@ -472,6 +471,9 @@ h2{
         width: 800px;
         margin:auto;
     }
+    #listing-box-table{
+        width:100%;
+    }
 
 }
 
@@ -483,6 +485,9 @@ h2{
     .plone-toolbar-left-expanded .container{
         max-width:100% !important;
         width: 100% !imporant;
+    }
+    #listing-box-table{
+        width:100%;
     }
 
 }
@@ -511,6 +516,9 @@ h2{
     }
     .section-carte{
         width:100%;
+    }
+    #listing-box-table{
+        width:600px;
     }
 }
 

@@ -36,18 +36,14 @@
 
 <div class="flex-box flex-justify-content-center">
     <table id="listing-box-table"
-           class="pat-datatables table table-striped table-bordered">
+           class="pat-datatables table table-striped table-bordered table-responsive">
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Localisation</th>
-                <th>SSID Wifi</th>
                 <th colspan="2">Etat Porte</th>
                 <th>Sms</th>
                 <th>Production</th>
                 <th>Aduino</th>
-                <th>Tournée</th>
-                <th>QR-Code</th>
                 <th></th>
             </tr>
         </thead>
@@ -68,22 +64,25 @@
                                 &nbsp;&nbsp;<i class="fas fa-external-link-alt"></i>
                             </sup>
                         </a>
-                        <br />
+                        <hr />
+                        <div clas="discreet">
+                            <span tal:content="myBox/address" /><br />
+                            <span tal:content="myBox/cp" />
+                            <span tal:content="myBox/localite" /><br />
+
+                            <i class="fad fa-globe"></i>
+                            <span tal:content="myBox/lat" /> -
+                            <span tal:content="myBox/long" /><br />
+                        </div>
+                        <hr />
+                        <div class="discreet">
+                            SSID Wifi :
+                            <span tal:content="myBox/ssid" />
+                        </div>
+                        <hr />
                         <span tal:content="myLab/name" class="discret" />
                         <br />
                         <span tal:content="idBox" class="discret" />
-                    </td>
-                    <td class="text-center">
-                        <span tal:content="myBox/address" /><br />
-                        <span tal:content="myBox/cp" />
-                        <span tal:content="myBox/localite" /><br />
-
-                        <i class="fad fa-globe"></i>
-                        <span tal:content="myBox/lat" /> -
-                        <span tal:content="myBox/long" /><br />
-                    </td>
-                    <td class="text-center">
-                        <span tal:content="myBox/ssid" />
                     </td>
                     <td>
                         <div>
@@ -130,29 +129,6 @@
                     <td class="text-center">
                         <span tal:condition="exists: myBox/arduino"
                               tal:content="myBox/arduino" />
-                    </td>
-                    <td class="text-center">
-                        <talblock tal:condition="python: myRound is not None">
-                            <div tal:define="myRoundName python:myRound['roundName'];
-                                             myRoundId python:myRound['idRound']">
-                                <a tal:attributes="href string:${context/portal_url}/gestion-des-boites/afficher-une-tournee?idRound=${myRoundId}"
-                                   class="noborder"
-                                   alt="Information sur cette tournée"
-                                   title="Information sur cette tournée"
-                                   role="button">
-                                    <span tal:content="myRoundName" />
-                                </a>
-                            </div>
-                        </talblock>
-                    </td>
-                    <td class="text-center">
-                        <img src=""
-                             title=""
-                             alt=""
-                             class="qr-code-50"
-                             tal:attributes="src string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
-                                             title string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png;
-                                             alt string:$portal_url/++theme++mitsibox/images/qrcode/${idBox}.png" />
                     </td>
                     <td class="text-center">
                         <nav class="menu-bouton">
