@@ -58,7 +58,7 @@
                         <a href=""
                            tal:attributes="href string:show-one-box?idBox=${myBox/_id}"
                            class="pat-plone-modal noborder"
-                           èdata-pat-plone-modal="{}">
+                           data-pat-plone-modal="{}">
                             <span tal:content="myBox/name" class="orange" />
                             <sup>
                                 &nbsp;&nbsp;<i class="fas fa-external-link-alt"></i>
@@ -125,8 +125,14 @@
                         </span>
                     </td>
                     <td class="text-center">
-                        <span tal:condition="exists: myBox/arduino"
-                              tal:content="myBox/arduino" />
+                        <span tal:condition="exists: myBox/arduino">
+                            <a href=""
+                               tal:attributes="href string:show-one-box?idBox=${myBox/_id}"
+                               class="pat-plone-modal noborder"
+                               data-pat-plone-modal="{}">
+                                <span tal:content="myBox/arduino" />
+                            </a>
+                        </span>
                     </td>
                     <td class="text-center">
                         <nav class="menu-bouton">
