@@ -117,7 +117,8 @@
                               tal:attributes="class python: myBox.alertsms=='True' and 'vert' or 'rouge'">
                             <i class="fas fa-sms"></i>
                         </span>
-
+                    </td>
+                    <td>
                         <span tal:condition="exists: myBox/productionstate"
                               tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
                             <i class="fad fa-power-off"></i>
