@@ -45,32 +45,36 @@
                 </div>
                 <div>
                     <!--Dernière température-->
-                    <span tal:condition="python: myBox.last_temp >= 20">
-                        <i class="fas fa-thermometer-full rouge pat-tooltip"
-                           data-toggle="tooltip"
-                           title="Température"></i>
-                    </span>
-                    <span tal:condition="python: myBox.last_temp < 20">
-                        <i class="fas fa-thermometer-full vert pat-tooltip"
-                           data-toggle="tooltip"
-                           title="Température"></i>
-                    </span>
-                    <span id=""
-                          tal:attributes="id string:box-last-temp"
-                          class="data-box"
-                          tal:condition="exists: myBox/last_temp"
-                          tal:content="myBox/last_temp" />
+                    <div tal:condition="exists: myBox/last_temp">
+                        <span tal:condition="python: myBox.last_temp >= 20">
+                            <i class="fas fa-thermometer-full rouge pat-tooltip"
+                               data-toggle="tooltip"
+                               title="Température"></i>
+                        </span>
+                        <span tal:condition="python: myBox.last_temp < 20">
+                            <i class="fas fa-thermometer-full vert pat-tooltip"
+                               data-toggle="tooltip"
+                               title="Température"></i>
+                        </span>
+                        <span id=""
+                              tal:attributes="id string:box-last-temp"
+                              class="data-box"
+                              tal:condition="exists: myBox/last_temp"
+                              tal:content="myBox/last_temp" />
+                    </div>
                 </div>
                 <div>
                     <!--Humidité-->
-                    <i class="fas fa-tint bleu-glyphe pat-tooltip"
-                       data-toggle="tooltip"
-                       title="Humidité"></i>
-                    <span id=""
-                          tal:attributes="id string:box-last-humidity"
-                          class="data-box"
-                          tal:condition="exists: myBox/last_humidity"
-                          tal:content="myBox/last_humidity" />
+                    <div tal:condition="exists: myBox/last_humidity">
+                        <i class="fas fa-tint bleu-glyphe pat-tooltip"
+                           data-toggle="tooltip"
+                           title="Humidité"></i>
+                        <span id=""
+                              tal:attributes="id string:box-last-humidity"
+                              class="data-box"
+                              tal:condition="exists: myBox/last_humidity"
+                              tal:content="myBox/last_humidity" />
+                    </div>
                 </div>
             </h3>
             <hr />
