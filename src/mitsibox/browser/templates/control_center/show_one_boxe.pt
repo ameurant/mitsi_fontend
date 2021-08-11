@@ -233,37 +233,39 @@
             <div class="flex-box flex-justify-content-space-between">
                 <div tal:condition="exists: myBox/ssid"
                      class="texte-gauche">
-                    <span class="label-box">SSID Wifi :</span>
+                    <span class="label-box discret">SSID Wifi :</span>
                     <ul>
                         <li>
                             <span tal:content="myBox/ssid"
-                                  class="data-box-level2" />
+                                  class="data-box-level2 discret" />
                         </li>
                     </ul>
                 </div>
                 <hr />
                 <div tal:condition="exists: myBox/cardSimId"
                      class="texte-gauche">
-                    <span class="label-box">Carte Sims : </span>
+                    <span class="label-box discret">Carte Sims : </span>
                     <ul>
                         <li>
                             <i class="fad fa-phone-square-alt"></i>
                             <span tal:content="myBox/cardPhoneNumber"
-                                  class="data-box-level2" />
+                                  class="data-box-level2 discret" />
                         </li>
                         <li>
                             <i class="fad fa-sim-card"></i>
                             <span tal:content="myBox/cardSimId"
-                                  class="data-box-level2" />
+                                  class="data-box-level2 discret" />
                         </li>
                         <li>
                             <i class="fab fa-connectdevelop"></i>
                             <span tal:content="myBox/cardSimPuk"
-                                  class="data-box-level2" />
+                                  class="data-box-level2 discret" />
                         </li>
                     </ul>
-                    <hr />
                 </div>
+            </div>
+            <hr />
+            <div class="flex-box flex-justify-content-space-between">
                 <div>
                     <!--labo-->
                     <div tal:define="idLab myBox/lab_id;
@@ -335,6 +337,7 @@
                         </a>
                     </nav>
                 </div>
+            </div>
         </section>
     </div>
     <script src=""
