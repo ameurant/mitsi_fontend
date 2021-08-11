@@ -53,6 +53,7 @@
                 <input type="text"
                        name="boxName"
                        id="box-name"
+                       class=""
                        tal:attributes="value myBox/name"  />
             </div>
             <div class="form-input">
@@ -118,6 +119,35 @@
                        id="box-pass-wifi"
                        tal:attributes="value myBox/passwifi" />
             </div>
+
+            <div class="form-input">
+                <label for="box-carte-sim-id">
+                    Numéro de la carte SIM :
+                </label>
+                <input type="text"
+                       name="boxCarteSimId"
+                       id="box-carte-sim-id"
+                       tal:attributes="value myBox/cardSimId" />
+            </div>
+            <div class="form-input">
+                <label for="box-carte-sim-puk">
+                    Puk de la carte SIM :
+                </label>
+                <input type="text"
+                       name="boxCarteSimPuk"
+                       id="box-carte-sim-puk"
+                       tal:attributes="value myBox/cardSimPuk" />
+            </div>
+            <div class="form-input">
+                <label for="box-numero-telephone">
+                    Numéro de téléphone
+                </label>
+                <input type="text"
+                       name="boxNumeroTelephone"
+                       id="box-numero-telephone"
+                       tal:attributes="value myBox/cardPhoneNumber" />
+            </div>
+
             <div class="form-input">
                 <label for="box-alert-sms">
                     Alerte SMS :

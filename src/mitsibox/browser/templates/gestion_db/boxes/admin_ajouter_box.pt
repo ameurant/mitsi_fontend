@@ -113,6 +113,36 @@
                        id="box-pass-wifi"
                        value="" />
             </div>
+
+
+            <div class="form-input">
+                <label for="box-carte-sim-id">
+                    Numéro de la carte SIM :
+                </label>
+                <input type="text"
+                       name="boxCarteSimId"
+                       id="box-carte-sim-id"
+                       value="" />
+            </div>
+            <div class="form-input">
+                <label for="box-carte-sim-puk">
+                    Puk de la carte SIM :
+                </label>
+                <input type="text"
+                       name="boxCarteSimPuk"
+                       id="box-carte-sim-puk"
+                       value="" />
+            </div>
+            <div class="form-input">
+                <label for="box-numero-telephone">
+                    Numéro de téléphone
+                </label>
+                <input type="text"
+                       name="boxNumeroTelephone"
+                       id="box-numero-telephone"
+                       value="" />
+            </div>
+
             <div class="form-input">
                 <label for="box-alert-sms">
                     Notification SMS :

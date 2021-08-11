@@ -189,10 +189,22 @@ a.noborder{
     font-family:"exo";
 }
 
+.texte-gauche{
+    text-align:left;
+}
 .texte-centrer{
     text-align:center;
 }
+.texte-droite{
+    text-align:right;
+}
+.texte-gras{
+    font-weight:bold;
+}
 
+sup.lien{
+    font-size:0.8rem;
+}
 
 
 /**** FLEX BOX ***/

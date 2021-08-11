@@ -59,13 +59,15 @@
                            tal:attributes="href string:show-one-box?idBox=${myBox/_id}"
                            class="pat-plone-modal noborder"
                            data-pat-plone-modal="{}">
-                            <span tal:content="myBox/name" class="orange" />
-                            <sup>
-                                &nbsp;&nbsp;<i class="fas fa-external-link-alt"></i>
-                            </sup>
+                            <h5>
+                                <span tal:content="myBox/name" class="orange texte-gras" />
+                                <sup class="lien">
+                                    &nbsp;&nbsp;<i class="fas fa-external-link-alt"></i>
+                                </sup>
+                            </h5>
                         </a>
                         <hr />
-                        <div clas="discreet">
+                        <div class="texte-gauche">
                             <span tal:content="myBox/address" /><br />
                             <span tal:content="myBox/cp" />
                             <span tal:content="myBox/localite" /><br />
@@ -75,11 +77,30 @@
                             <span tal:content="myBox/long" /><br />
                         </div>
                         <hr />
-                        <div class="discreet">
+                        <div class="texte-gauche">
                             SSID Wifi :
                             <span tal:content="myBox/ssid" />
                         </div>
                         <hr />
+                        <div tal:condition="exists: myBox/cardSimId"
+                             class="texte-gauche">
+                            Carte Sims :
+                            <ul>
+                                <li>
+                                    <i class="fad fa-phone-square-alt"></i>
+                                    <span tal:content="myBox/cardPhoneNumber" />
+                                </li>
+                                <li>
+                                    <i class="fad fa-sim-card"></i>
+                                    <span tal:content="myBox/cardSimId" />
+                                </li>
+                                <li>
+                                    <i class="fab fa-connectdevelop"></i>
+                                    <span tal:content="myBox/cardSimPuk" />
+                                </li>
+                            </ul>
+                            <hr />
+                        </div>
                         <span tal:content="myLab/name" class="discret" />
                         <br />
                         <span tal:content="idBox" class="discret" />
@@ -121,7 +142,9 @@
                     <td>
                         <span tal:condition="exists: myBox/productionstate"
                               tal:attributes="class python: myBox.productionstate=='True' and 'vert' or 'rouge'">
-                            <i class="fad fa-power-off"></i>
+                            <i class="fad fa-power-off"></i><br />
+                            <span tal:content="myBox/productionstate"
+                                  class="discret" />
                         </span>
                     </td>
                     <td class="text-center">
@@ -130,6 +153,7 @@
                                tal:attributes="href string:show-one-box?idBox=${myBox/_id}"
                                class="pat-plone-modal noborder"
                                data-pat-plone-modal="{}">
+                                <i class="fal fa-microchip"></i>
                                 <span tal:content="myBox/arduino" />
                             </a>
                         </span>
